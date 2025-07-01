@@ -1,15 +1,24 @@
 {
   "name": "electron-study",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "./dist/main/main.js",
+  "type": "module",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:electron": "tsc --watch",
+    "dev:renderer": "vite",
+    "build:renderer": "vite build",
+    "start": "tsc && electron ./dist/main/main.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "electron": "^36.5.0"
+    "@types/node": "^24.0.8",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "@typescript-eslint/parser": "^8.35.1",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "electron": "^36.5.0",
+    "vite": "^6.3.5",
+    "vue": "^3.5.17"
   }
 }
