@@ -20,8 +20,7 @@ const createWindow = () => {
   console.log("运行环境:", process.env.NODE_ENV);
   
   if (process.env.NODE_ENV === 'development') {
-    win.loadURL('http://localhost:5173')
-    win.webContents.openDevTools()
+    win.loadURL('http://localhost:11069')
   } else {
     win.loadFile(path.join(__dirname, '../renderer/index.html'))
   }

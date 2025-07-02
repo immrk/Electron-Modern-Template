@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-main",
+      "type": "shell",
+      "command": "tsc -p tsconfig.json",
+      "problemMatcher": []
+    },
+    {
+      "label": "build-renderer",
+      "type": "shell",
+      "command": "npm run build:renderer",
+      "problemMatcher": []
+    },
+    {
+      "label": "build-all",
+      "type": "shell",
+      "command": "tsc -p tsconfig.json && npm run build:renderer",
+      "problemMatcher": []
+    }
+  ]
+}
