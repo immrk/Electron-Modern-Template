@@ -13,9 +13,7 @@
     "start": "electron ./dist/main/main.js",
     "forge:start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "rm -rf dist && rm -rf out && tsc && npm run build:renderer && electron-forge make",
-    "test:multi-window": "node test-multi-window.js",
-    "test:window-creation": "node test-window-creation.js"
+    "make": "rm -rf dist && rm -rf out && tsc && npm run build:renderer && electron-forge make"
   },
   "author": "",
   "license": "ISC",

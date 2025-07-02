@@ -2,7 +2,7 @@ import { app, BrowserWindow } from 'electron'
 import { createMenu } from './menu.js'
 import { windowManager } from './windowManager.js'
 import { WINDOW_NAMES } from '../config/windowConfig.js'
-import { setupIpcHandlers } from './ipcHandlers.js'
+import { setupIpcHandlers } from './ipc/index.js'
 
 app.whenReady().then(() => {
   setupIpcHandlers() // 设置 IPC 处理器

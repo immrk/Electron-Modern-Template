@@ -38,7 +38,7 @@ export class WindowManager {
 
     // 合并配置和选项
     // 在开发环境中，preload 脚本路径需要指向编译后的文件
-    const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged
+    const isDev = process.env.NODE_ENV === 'development'
     const preloadPath = isDev 
       ? path.join(__dirname, '../preload/preload.js')
       : path.join(__dirname, '../preload/preload.js')
@@ -114,11 +114,11 @@ export class WindowManager {
     console.log("当前目录:", __dirname)
     
     // 检查是否为开发环境（通过检查是否存在开发服务器）
-    const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged
+    const isDev = process.env.NODE_ENV === 'development'
     
     if (isDev) {
       // 开发环境：使用主端口，通过查询参数区分窗口
-      const port = 11069
+      const port = WINDOW_LIST[windowName].devPort
       const url = `http://localhost:${port}?window=${windowName}`
       console.log(`尝试加载窗口 ${windowName} 到: ${url}`)
       
