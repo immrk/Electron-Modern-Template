@@ -1,8 +1,9 @@
 import { Menu, MenuItemConstructorOptions, BrowserWindow, app } from 'electron'
-import { getAllMenuConfigs } from './menuConfig.js'
+import { getAllMenuConfigs } from '../config/menuConfig.js'
+import { WindowManager } from './windowManager.js'
 
 // 创建主菜单模板
-const createMainMenuTemplate = (): MenuItemConstructorOptions[] => {
+const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstructorOptions[] => {
   const isMac = process.platform === 'darwin'
 
   const template: MenuItemConstructorOptions[] = [
@@ -22,16 +23,116 @@ const createMainMenuTemplate = (): MenuItemConstructorOptions[] => {
       ]
     }] : []),
     
-    // 使用配置文件中的菜单
-    ...getAllMenuConfigs()
+    // 文件菜单
+    {
+      label: '文件',
+      submenu: [
+        {
+          label: '新建主窗口',
+          accelerator: 'CmdOrCtrl+N',
+          click: () => {
+            console.log('创建新主窗口')
+            windowManager.createWindow('main')
+          }
+        },
+        {
+          label: '打开设置窗口',
+          accelerator: 'CmdOrCtrl+,',
+          click: () => {
+            console.log('打开设置窗口')
+            windowManager.createWindow('setting')
+          }
+        },
+        { type: 'separator' as const },
+        process.platform === 'darwin' ? { role: 'close' as const } : { role: 'quit' as const }
+      ]
+    },
+    
+    // 编辑菜单
+    {
+      label: '编辑',
+      submenu: [
+        { role: 'undo' as const },
+        { role: 'redo' as const },
+        { type: 'separator' as const },
+        { role: 'cut' as const },
+        { role: 'copy' as const },
+        { role: 'paste' as const },
+        ...(process.platform === 'darwin' ? [
+          { role: 'pasteAndMatchStyle' as const },
+          { role: 'delete' as const },
+          { role: 'selectAll' as const }
+        ] : [
+          { role: 'delete' as const },
+          { type: 'separator' as const },
+          { role: 'selectAll' as const }
+        ])
+      ]
+    },
+    
+    // 视图菜单
+    {
+      label: '视图',
+      submenu: [
+        { role: 'reload' as const },
+        { role: 'forceReload' as const },
+        { role: 'toggleDevTools' as const },
+        { type: 'separator' as const },
+        { role: 'resetZoom' as const },
+        { role: 'zoomIn' as const },
+        { role: 'zoomOut' as const },
+        { type: 'separator' as const },
+        { role: 'togglefullscreen' as const }
+      ]
+    },
+    
+    // 窗口菜单
+    {
+      label: '窗口',
+      submenu: [
+        { role: 'minimize' as const },
+        { role: 'close' as const },
+        ...(process.platform === 'darwin' ? [
+          { type: 'separator' as const },
+          { role: 'front' as const },
+          { type: 'separator' as const },
+          { role: 'window' as const }
+        ] : [
+          { role: 'quit' as const }
+        ])
+      ]
+    },
+    
+    // Help菜单
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: '开发者工具',
+          accelerator: process.platform === 'darwin' ? 'Cmd+Option+I' : 'Ctrl+Shift+I',
+          click: (_menuItem, browserWindow) => {
+            if (browserWindow && browserWindow instanceof BrowserWindow) {
+              browserWindow.webContents.toggleDevTools()
+            }
+          }
+        },
+        { type: 'separator' as const },
+        {
+          label: '关于',
+          click: () => {
+            console.log('关于应用')
+          }
+        }
+      ]
+    }
   ]
 
   return template
 }
 
 // 创建主菜单
-export const createMenu = (): void => {
-  const template = createMainMenuTemplate()
+export const createMenu = (windowManager: WindowManager): void => {
+  const template = createMainMenuTemplate(windowManager)
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 }

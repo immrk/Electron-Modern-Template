@@ -6,11 +6,16 @@
   "scripts": {
     "watch": "tsc --watch",
     "dev": "vite",
+    "dev:main": "vite --port 11069",
+    "dev:setting": "vite --port 11070",
+    "dev:multi": "concurrently \"npm run dev:main\" \"npm run dev:setting\"",
     "build:renderer": "vite build",
     "start": "electron ./dist/main/main.js",
     "forge:start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "rm -rf dist && rm -rf out && tsc && npm run build:renderer && electron-forge make"
+    "make": "rm -rf dist && rm -rf out && tsc && npm run build:renderer && electron-forge make",
+    "test:multi-window": "node test-multi-window.js",
+    "test:window-creation": "node test-window-creation.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +33,7 @@
     "@typescript-eslint/eslint-plugin": "^8.35.1",
     "@typescript-eslint/parser": "^8.35.1",
     "@vitejs/plugin-vue": "^5.2.4",
+    "concurrently": "^9.1.0",
     "electron": "^36.5.0",
     "vite": "^6.3.5",
     "vue": "^3.5.17"

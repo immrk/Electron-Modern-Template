@@ -40,10 +40,23 @@ export const fileMenuConfig: MenuConfig = {
   label: '文件',
   submenu: [
     {
-      label: '新建窗口',
+      label: '新建主窗口',
       accelerator: 'CmdOrCtrl+N',
       click: () => {
-        console.log('创建新窗口')
+        console.log('创建新主窗口')
+        // 这里需要通过全局变量或事件来创建窗口
+        // 暂时使用 console.log 提示
+        console.log('请通过窗口管理界面创建新窗口')
+      }
+    },
+    {
+      label: '打开设置窗口',
+      accelerator: 'CmdOrCtrl+,',
+      click: () => {
+        console.log('打开设置窗口')
+        // 这里需要通过全局变量或事件来创建窗口
+        // 暂时使用 console.log 提示
+        console.log('请通过窗口管理界面创建设置窗口')
       }
     },
     { type: 'separator' as const },

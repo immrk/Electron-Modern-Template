@@ -1,41 +1,21 @@
 import { app, BrowserWindow } from 'electron'
-import * as path from 'path'
-import { fileURLToPath } from 'url'
-import { createMenu, setupContextMenu } from './menu.js'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    // 预加载文件(用于隔离渲染进程和主进程，并进行通信)
-    webPreferences: {
-      preload: path.join(__dirname, '../preload/preload.js'),
-      nodeIntegration: false,
-      contextIsolation: true
-    }
-  })
-  console.log("运行环境:", process.env.NODE_ENV);
-  
-  if (process.env.NODE_ENV === 'development') {
-    win.loadURL('http://localhost:11069')
-  } else {
-    win.loadFile(path.join(__dirname, '../renderer/index.html'))
-  }
-
-  // 设置右键上下文菜单
-  setupContextMenu(win)
-}
+import { createMenu } from './menu.js'
+import { windowManager } from './windowManager.js'
+import { WINDOW_NAMES } from '../config/windowConfig.js'
+import { setupIpcHandlers } from './ipcHandlers.js'
 
 app.whenReady().then(() => {
-  createMenu() // 创建菜单
-  createWindow()
+  setupIpcHandlers() // 设置 IPC 处理器
+  createMenu(windowManager) // 创建菜单，传递窗口管理器
+  
+  // 创建主窗口
+  windowManager.createWindow(WINDOW_NAMES.main)
 
   app.on('activate', () => {
+    // 在 macOS 上，当点击 dock 图标并且没有其他窗口打开时，
+    // 通常在应用程序中重新创建一个窗口。
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
+      windowManager.createWindow(WINDOW_NAMES.main)
     }
   })
 })
