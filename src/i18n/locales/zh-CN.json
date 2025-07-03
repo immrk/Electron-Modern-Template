@@ -33,5 +33,13 @@
     "unhide": "显示",
     "services": "服务",
     "windowMenu": "窗口"
+  },
+  "window": {
+    "main": {
+      "index": "首页",
+      "counter": "计数器",
+      "info": "系统信息",
+      "windows": "窗口管理"
+    }
   }
 } 

@@ -4,7 +4,7 @@
   "main": "./dist/main/main.js",
   "type": "module",
   "scripts": {
-    "watch": "nodemon --watch 'src' --exec 'npm run build:main'",
+    "watch": "nodemon",
     "dev": "vite",
     "dev:main": "vite --port 11069",
     "dev:setting": "vite --port 11070",
@@ -39,8 +39,6 @@
     "vue": "^3.5.17"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1",
-    "i18next": "^25.3.0",
-    "i18next-fs-backend": "^2.6.0"
+    "electron-squirrel-startup": "^1.0.1"
   }
 }

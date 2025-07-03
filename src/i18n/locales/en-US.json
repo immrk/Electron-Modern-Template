@@ -33,5 +33,13 @@
     "unhide": "Show All",
     "services": "Services",
     "windowMenu": "Window"
+  },
+  "window": {
+    "main": {
+      "index": "Home",
+      "counter": "Counter",
+      "info": "System Info",
+      "windows": "Window Management"
+    }
   }
 } 
