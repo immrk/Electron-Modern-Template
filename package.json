@@ -4,7 +4,7 @@
   "main": "./dist/main/main.js",
   "type": "module",
   "scripts": {
-    "watch": "tsc --watch",
+    "watch": "nodemon --watch 'src' --exec 'npm run build:main'",
     "dev": "vite",
     "dev:main": "vite --port 11069",
     "dev:setting": "vite --port 11070",
@@ -13,7 +13,8 @@
     "start": "electron ./dist/main/main.js",
     "forge:start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "rm -rf dist && rm -rf out && tsc && npm run build:renderer && electron-forge make"
+    "build:main": "node scripts/main.js",
+    "make": "rm -rf dist && rm -rf out && node scripts/main.js && npm run build:renderer && electron-forge make"
   },
   "author": "",
   "license": "ISC",
@@ -33,10 +34,13 @@
     "@vitejs/plugin-vue": "^5.2.4",
     "concurrently": "^9.1.0",
     "electron": "^36.5.0",
+    "nodemon": "^3.1.10",
     "vite": "^6.3.5",
     "vue": "^3.5.17"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "i18next": "^25.3.0",
+    "i18next-fs-backend": "^2.6.0"
   }
 }
