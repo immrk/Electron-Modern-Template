@@ -1,6 +1,7 @@
 import { setupWindowHandlers } from './handlers/window.js'
 import { setupAppHandlers } from './handlers/app.js'
 import { setupSystemHandlers } from './handlers/system.js'
+import { setupI18nHandlers } from './handlers/i18n.js'
 
 /**
  * 设置所有IPC处理器
@@ -17,6 +18,9 @@ export const setupIpcHandlers = (): void => {
   
   // 设置系统相关的IPC处理器
   setupSystemHandlers()
+  
+  // 设置i18n相关的IPC处理器
+  setupI18nHandlers()
   
   console.log('IPC处理器设置完成')
 }

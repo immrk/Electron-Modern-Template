@@ -44,6 +44,7 @@ export class WindowManager {
       : path.join(__dirname, '../preload/preload.js')
     
     console.log('Preload 脚本路径:', preloadPath)
+    console.log("运行环境:", process.env.NODE_ENV)
     console.log('是否为开发环境:', isDev)
     
     const windowOptions = {
@@ -110,8 +111,6 @@ export class WindowManager {
    * @param windowName 窗口名称
    */
   private loadWindowContent(window: BrowserWindow, windowName: string): void {
-    console.log("运行环境:", process.env.NODE_ENV)
-    console.log("当前目录:", __dirname)
     
     // 检查是否为开发环境（通过检查是否存在开发服务器）
     const isDev = process.env.NODE_ENV === 'development'

@@ -1,6 +1,7 @@
 import { Menu, MenuItemConstructorOptions, BrowserWindow, app } from 'electron'
 import { getAllMenuConfigs } from '../config/menuConfig.js'
 import { WindowManager } from './windowManager.js'
+import { t } from './i18n.js'
 
 // 创建主菜单模板
 const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstructorOptions[] => {
@@ -25,10 +26,10 @@ const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstruct
     
     // 文件菜单
     {
-      label: '文件',
+      label: t('menu.file'),
       submenu: [
         {
-          label: '新建主窗口',
+          label: t('menu.newMainWindow'),
           accelerator: 'CmdOrCtrl+N',
           click: () => {
             console.log('创建新主窗口')
@@ -36,7 +37,7 @@ const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstruct
           }
         },
         {
-          label: '打开设置窗口',
+          label: t('menu.openSettingWindow'),
           accelerator: 'CmdOrCtrl+,',
           click: () => {
             console.log('打开设置窗口')
@@ -50,7 +51,7 @@ const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstruct
     
     // 编辑菜单
     {
-      label: '编辑',
+      label: t('menu.edit'),
       submenu: [
         { role: 'undo' as const },
         { role: 'redo' as const },
@@ -72,7 +73,7 @@ const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstruct
     
     // 视图菜单
     {
-      label: '视图',
+      label: t('menu.view'),
       submenu: [
         { role: 'reload' as const },
         { role: 'forceReload' as const },
@@ -88,7 +89,7 @@ const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstruct
     
     // 窗口菜单
     {
-      label: '窗口',
+      label: t('menu.window'),
       submenu: [
         { role: 'minimize' as const },
         { role: 'close' as const },
@@ -105,10 +106,10 @@ const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstruct
     
     // Help菜单
     {
-      label: 'Help',
+      label: t('menu.help'),
       submenu: [
         {
-          label: '开发者工具',
+          label: t('menu.developerTools'),
           accelerator: process.platform === 'darwin' ? 'Cmd+Option+I' : 'Ctrl+Shift+I',
           click: (_menuItem, browserWindow) => {
             if (browserWindow && browserWindow instanceof BrowserWindow) {
@@ -118,7 +119,7 @@ const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstruct
         },
         { type: 'separator' as const },
         {
-          label: '关于',
+          label: t('menu.about'),
           click: () => {
             console.log('关于应用')
           }
@@ -141,16 +142,16 @@ export const createMenu = (windowManager: WindowManager): void => {
 export const createContextMenu = (): Menu => {
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: '复制',
+      label: t('menu.copy'),
       role: 'copy' as const
     },
     {
-      label: '粘贴',
+      label: t('menu.paste'),
       role: 'paste' as const
     },
     { type: 'separator' as const },
     {
-      label: '开发者工具',
+      label: t('menu.developerTools'),
       click: (menuItem, browserWindow) => {
         if (browserWindow && browserWindow instanceof BrowserWindow) {
           browserWindow.webContents.toggleDevTools()
