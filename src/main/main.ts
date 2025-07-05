@@ -4,14 +4,18 @@ import { windowManager } from './windowManager.js'
 import { WINDOW_NAMES } from '../config/windowConfig.js'
 import { setupIpcHandlers } from './ipc/index.js'
 import { initMainI18n } from './i18n.js'
+import Store from 'electron-store';
 import '../utils/logger.js'
 
 app.whenReady().then(async () => {
   // 初始化i18n
-  await initMainI18n(app.getLocale())
-  
-  setupIpcHandlers() // 设置 IPC 处理器
-  createMenu(windowManager) // 创建菜单，传递窗口管理器
+  await initMainI18n() 
+
+  // 设置 IPC 处理器
+  setupIpcHandlers()
+
+  // 创建菜单，传递窗口管理器
+  createMenu(windowManager)
   
   // 创建主窗口
   windowManager.createWindow(WINDOW_NAMES.main)

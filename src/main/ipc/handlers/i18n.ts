@@ -2,7 +2,7 @@ import { ipcMain } from 'electron'
 import { setLanguage, getCurrentLanguage, getSupportedLanguages, t } from '../../i18n.js'
 import { createMenu } from '../../menu.js'
 import { windowManager } from '../../windowManager.js'
-import type { SupportedLanguages } from '../../../i18n/types.js'
+import type { SupportedLanguages } from '../../i18n.js'
 
 /**
  * 设置i18n相关的IPC处理器
