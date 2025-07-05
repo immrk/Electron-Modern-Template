@@ -25,9 +25,9 @@
         >
           <template #header>
             <div class="card-header">
-              <div class="card-icon">
+              <el-icon class="card-icon" :size="30" color="#fff">
                 <component :is="item.icon" />
-              </div>
+              </el-icon>
               <span class="card-title">{{ item.title }}</span>
             </div>
           </template>
@@ -41,39 +41,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, h } from "vue";
+import { Platform, Monitor, Brush, Tools } from "@element-plus/icons-vue";
 
 const featureList = ref([
   {
     title: "现代化开发体验",
-    description: "基于Vue 3 + TypeScript + Vite构建，提供热重载、类型安全等现代化开发体验",
-    icon: "Monitor"
+    description: "基于Vue3(即将支持React) + TypeScript + Vite构建，提供热重载、类型安全等现代化开发体验",
+    icon: () => h(Monitor)
   },
   {
     title: "跨平台兼容",
     description: "支持Windows、macOS、Linux三大主流操作系统，一次开发，多平台部署",
-    icon: "Platform"
+    icon: () => h(Platform)
   },
   {
-    title: "丰富的UI组件",
-    description: "集成Element Plus组件库，提供美观且功能丰富的用户界面组件",
-    icon: "Brush"
+    title: "自动按需导入的UI组件",
+    description: "集成Element Plus组件库，提供美观且功能丰富的用户界面组件的同时, 无需手动导入，支持自定义主题",
+    icon: () => h(Brush)
   },
   {
-    title: "开发工具集成",
-    description: "内置调试工具、打包配置、代码规范检查，提升开发效率",
-    icon: "Tools"
+    title: "i18n国际化支持",
+    description: "Electron主进程、渲染进程、UI组件均已集成国际化，支持多语言切换；快速构建多语言应用",
+    icon: () => h(Tools)
   },
-  {
-    title: "安全性保障",
-    description: "遵循Electron安全最佳实践，提供安全的桌面应用开发方案",
-    icon: "Shield"
-  },
-  {
-    title: "性能优化",
-    description: "优化的构建配置和运行时性能，确保应用流畅运行",
-    icon: "Zap"
-  }
 ]);
 </script>
 
@@ -81,9 +72,9 @@ const featureList = ref([
 .home {
   height: 100%;
   width: 100%;
-  color: #333333;
+  color: #333;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: #ffffff;
+  background: #fff;
   overflow-y: auto;
 }
 
@@ -103,12 +94,13 @@ const featureList = ref([
   width: 80px;
   height: 80px;
   margin: 0 auto 24px;
+  padding: 10px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: #fff;
   font-size: 32px;
   box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
 }
@@ -126,7 +118,6 @@ const featureList = ref([
 
 .description {
   font-size: 20px;
-  font-weight: 400;
   margin: 0;
   color: #64748b;
   line-height: 1.6;
@@ -136,7 +127,6 @@ const featureList = ref([
   padding: 60px 40px;
   max-width: 1200px;
   margin: 0 auto;
-  background: #ffffff;
 }
 
 .section-title {
@@ -157,23 +147,18 @@ const featureList = ref([
 .feature-card {
   width: 100%;
   max-width: 400px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
   border-radius: 16px;
-  overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .feature-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  border-color: #667eea;
 }
 
 .feature-card :deep(.el-card__header) {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #ffffff;
+  color: #fff;
   padding: 24px;
   border: none;
 }
@@ -193,22 +178,17 @@ const featureList = ref([
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  color: #ffffff;
+  color: #fff;
 }
 
 .card-title {
   font-size: 18px;
   font-weight: 600;
-  color: #ffffff;
+  color: #fff;
 }
 
 .feature-card :deep(.el-card__body) {
   padding: 24px;
-  background: #ffffff;
-}
-
-.card-content {
-  color: #333333;
 }
 
 .card-description {
@@ -245,27 +225,4 @@ const featureList = ref([
     max-width: 100%;
   }
 }
-
-/* 添加一些动画效果 */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.feature-card {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-.feature-card:nth-child(1) { animation-delay: 0.1s; }
-.feature-card:nth-child(2) { animation-delay: 0.2s; }
-.feature-card:nth-child(3) { animation-delay: 0.3s; }
-.feature-card:nth-child(4) { animation-delay: 0.4s; }
-.feature-card:nth-child(5) { animation-delay: 0.5s; }
-.feature-card:nth-child(6) { animation-delay: 0.6s; }
 </style>
