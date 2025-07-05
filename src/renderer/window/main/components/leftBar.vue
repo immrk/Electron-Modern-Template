@@ -37,6 +37,8 @@ import { MenuEnum } from "../constants";
 
 const emit = defineEmits(["menuClick"]);
 
+const isDark = ref(false);
+
 const squareUrl =
   "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png";
 
@@ -95,7 +97,12 @@ const handleSettingClick = () => {
 }
 
 .bottom-menu {
-  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 80px;
 }
 
 .menu-item:hover {
