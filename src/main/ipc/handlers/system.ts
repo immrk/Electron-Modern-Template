@@ -1,5 +1,9 @@
-import { ipcMain, shell, clipboard, nativeTheme } from 'electron'
+import { ipcMain, shell, clipboard, nativeTheme, BrowserWindow } from 'electron'
 import { wrapAsyncOperation } from '../utils/response.js'
+import Store from 'electron-store'
+
+
+const store = new Store()
 
 /**
  * 系统相关的IPC处理器
@@ -47,7 +51,29 @@ export const setupSystemHandlers = (): void => {
   // 获取系统主题
   ipcMain.handle('system:getTheme', async () => {
     return wrapAsyncOperation(async () => {
-      return nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
+      // 获取store中的主题
+      const storeTheme = store.get('theme')
+      const systemTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
+      return {
+        storeTheme: storeTheme,
+        systemTheme: systemTheme
+      }
+    })
+  })
+
+  // 主题切换
+  ipcMain.handle('system:changeTheme', async (event, theme: string) => {
+    return wrapAsyncOperation(async () => {
+      store.set('theme', theme)
+      
+      // 向所有渲染进程发送主题变化事件
+      BrowserWindow.getAllWindows().forEach(window => {
+        if (!window.isDestroyed()) {
+          window.webContents.send('system:changeTheme', theme)
+        }
+      })
+      
+      return undefined
     })
   })
 

@@ -6,6 +6,13 @@ declare module '*.vue' {
   export default component
 }
 
+// 系统 API 类型定义
+interface SystemAPI {
+  changeTheme: (theme: string) => Promise<any>
+  getTheme: () => Promise<{ data: { storeTheme: string | undefined; systemTheme: string } }>
+  onChangeTheme: (callback: (theme: string) => void) => void
+}
+
 // 窗口管理 API 类型定义
 interface WindowManagerAPI {
   createWindow: (windowName: string, options?: any) => Promise<{ success: boolean; data?: any; error?: string }>
@@ -32,11 +39,19 @@ interface VersionsAPI {
   ping: () => Promise<string>
 }
 
+// Store API 类型定义
+interface StoreAPI {
+  getStore: (key: string) => Promise<any>
+  setStore: (key: string, value: any) => Promise<void>
+}
+
 // 扩展 Window 接口
 declare global {
   interface Window {
+    system: SystemAPI
     windowManager: WindowManagerAPI
     versions: VersionsAPI
+    store: StoreAPI
   }
 }
 

@@ -32,7 +32,8 @@ export class WindowManager {
 
     // 检查窗口是否已存在
     if (this.windows.has(windowName)) {
-      console.warn(`窗口已存在: ${windowName}`)
+      console.log(`窗口已存在: ${windowName} 显示窗口`)
+      this.windows.get(windowName)?.window.show()
       return this.windows.get(windowName) || null
     }
 

@@ -11,8 +11,8 @@ export const WINDOW_LIST: { [key: string]: any } = {
         devPort: 11069,
     },
     [WINDOW_NAMES.setting]: {
-        width: 800,
-        height: 600,
+        width: 500,
+        height: 400,
         // title: '设置窗口',
         devPort: 11070,
     }
