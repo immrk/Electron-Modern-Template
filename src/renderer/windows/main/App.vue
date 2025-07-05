@@ -1,13 +1,41 @@
 <template>
-  <div>
-    <h1>Hello World</h1>
+  <div class="main-layout">
+    <div class="left-bar">
+      <left-bar @menuClick="handleMenuClick" />
+    </div>
+    <div class="main-content">
+      <component :is="currentMenu === MenuEnum.HOME ? home : currentMenu === MenuEnum.SYSTEM ? system : window" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import leftBar from './components/leftBar.vue';
+import home from './components/home.vue';
+import system from './components/system.vue';
+import window from './components/window.vue';
+import { MenuEnum } from './constants';
 
+const currentMenu = ref(MenuEnum.HOME);
+
+const handleMenuClick = (name: MenuEnum) => {
+  currentMenu.value = name;
+};
 </script>
 
 <style scoped>
-
+.main-layout {
+  height: 100%;
+  margin: 0 !important;
+  display: flex;
+}
+.left-bar {
+  height: 100%;
+}
+.main-content {
+  height: 100%;
+  width: 100%;
+  background-color: var(--el-bg-color);
+}
 </style>

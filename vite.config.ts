@@ -1,20 +1,22 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import path from "path";
+import { fileURLToPath } from "url";
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig(async () => {
   /* 1. 当前窗口名称（默认为 main） */
-  const currentWindow = process.env.WINDOW_NAME || 'main';
+  const currentWindow = process.env.WINDOW_NAME || "main";
 
   /* 2. 读取 .cache/windowConfig.mjs */
-  const windowConfigPath = path.resolve(__dirname, '.cache/windowConfig.mjs');
+  const windowConfigPath = path.resolve(__dirname, ".cache/windowConfig.mjs");
   const { WINDOW_LIST } = await import(`file://${windowConfigPath}`);
   const windowConfig = WINDOW_LIST[currentWindow];
   if (!windowConfig) {
@@ -22,29 +24,58 @@ export default defineConfig(async () => {
   }
 
   /* 3. 窗口根目录（含 index.html） */
-  const windowRoot = path.resolve(__dirname, `src/renderer/windows/${currentWindow}`);
+  const windowRoot = path.resolve(
+    __dirname,
+    `src/renderer/windows/${currentWindow}`
+  );
 
   /* 4. 打包输出路径 */
-  const outDir = path.resolve(__dirname, `dist/renderer/${currentWindow}`);
+  const outDir = path.resolve(__dirname, `dist/renderer/windows/${currentWindow}`);
 
   return {
     root: windowRoot,
-    base: './',
+    base: "./",
     plugins: [
       vue(),
-      AutoImport({ resolvers: [ElementPlusResolver()], dts: false }),
-      Components({ resolvers: [ElementPlusResolver()], dts: false }),
+      AutoImport({
+        resolvers: [
+          ElementPlusResolver({ importStyle: 'sass' }),
+          IconsResolver({
+            prefix: "Icon",
+          }),
+        ],
+        dts: false,
+      }),
+      Components({
+        resolvers: [
+          ElementPlusResolver({ importStyle: 'sass' }),
+          IconsResolver({
+            enabledCollections: ["ep"],
+          }),
+        ],
+        dts: false,
+      }),
+      Icons({
+        autoInstall: true,
+      }),
     ],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "~/styles/element/index.scss" as *;`,
+        },
+      },
+    },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src/renderer'),
-        '~': path.resolve(__dirname, 'src/renderer'),
+        "@": path.resolve(__dirname, "src/renderer"),
+        "~": path.resolve(__dirname, "src/renderer"),
       },
     },
     server: {
       port: windowConfig.devPort,
       strictPort: true,
-      host: 'localhost',
+      host: "localhost",
       hmr: { port: windowConfig.devPort },
     },
     build: {
