@@ -120,6 +120,9 @@ export class WindowManager {
       const port = WINDOW_LIST[windowName].devPort
       const url = `http://localhost:${port}?window=${windowName}`
       console.log(`尝试加载窗口 ${windowName} 到: ${url}`)
+
+      // 打开开发者工具
+      window.webContents.openDevTools()
       
       // 添加错误处理
       window.loadURL(url).catch((error) => {

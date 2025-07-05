@@ -1,15 +1,18 @@
 # Electron-Modern-Template
-Modern Electron development framework: supports Vue, React, TS and i18n
-现代化Electron开发框架：同时支持Vue、React、TS以及i18n国际化
+
+Modern Electron development framework: supports Vue, React(Coming soon), TS and i18n
+现代化Electron开发框架：同时支持Vue、React(即将支持)、TS以及i18n国际化
 
 ## 1. Development Mode 开发模式
 
 ### 1.1 Install Dependencies 依赖库安装
+
 ```bash
 npm i
 ```
 
 ### 1.2 Start Main Process: Watch Mode 启动进程代码：watch模式（单独一个进程）
+
 Real-time compilation of file modifications except for renderer pages, but changes require app restart to take effect
 实时编译除了renderer页面外的文件修改，但变更需要重启app才能生效
 
@@ -18,6 +21,7 @@ npm run watch
 ```
 
 ### 1.3 Start Renderer Process: Vue Dev Mode 启动渲染层：vue项目dev模式（单独一个进程）
+
 Vue runs on the interface in dev mode, requiring Electron to be started in development mode (use DEBUG-Electron TS Development to start in dev mode)
 dev模式vue运行在接口上，需要以development模式启动electron（使用DEBUG-Electron TS Development即可以dev模式启动）
 
@@ -26,7 +30,8 @@ npm run dev
 ```
 
 ### 1.4 Start Electron Application 启动electron应用（单独一个进程）
-- **Debug Launch**: 
+
+- **Debug Launch**:
   - Electron TS Development: starts dev mode (uses vite interface) / Electron TS Production (uses packaged code in dist)
   - Debug启动：Electron TS Development启动dev模式(使用vite接口) / Electron TS Production(使用dist内打包代码)
 - **Command Launch**: `npm run start`
