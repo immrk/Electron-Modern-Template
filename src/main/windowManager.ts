@@ -128,7 +128,7 @@ export class WindowManager {
       window.loadURL(url).catch((error) => {
         console.error(`加载窗口 ${windowName} 失败:`, error)
         // 如果开发服务器没有运行，尝试加载本地文件
-        const htmlPath = path.join(__dirname, `../renderer/windows/${windowName}/index.html`)
+        const htmlPath = path.join(__dirname, `../renderer/window/${windowName}/index.html`)
         console.log(`尝试加载本地文件: ${htmlPath}`)
         window.loadFile(htmlPath).catch((fileError) => {
           console.error(`加载本地文件也失败:`, fileError)
@@ -136,7 +136,7 @@ export class WindowManager {
       })
     } else {
       // 生产环境：加载对应的HTML文件
-      const htmlPath = path.join(__dirname, `../renderer/windows/${windowName}/index.html`)
+      const htmlPath = path.join(__dirname, `../renderer/window/${windowName}/index.html`)
       window.loadFile(htmlPath)
     }
   }

@@ -117,7 +117,7 @@ async function buildAllWindows(WINDOW_LIST) {
       await buildAllWindows(WINDOW_LIST);
     }
 
-    log('构建完成！输出目录: dist/renderer/windows/');
+    log('构建完成！输出目录: dist/renderer/window/');
   } catch (err) {
     error('构建失败:', err);
     process.exit(1);

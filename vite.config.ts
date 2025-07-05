@@ -26,11 +26,11 @@ export default defineConfig(async () => {
   /* 3. 窗口根目录（含 index.html） */
   const windowRoot = path.resolve(
     __dirname,
-    `src/renderer/windows/${currentWindow}`
+    `src/renderer/window/${currentWindow}`
   );
 
   /* 4. 打包输出路径 */
-  const outDir = path.resolve(__dirname, `dist/renderer/windows/${currentWindow}`);
+  const outDir = path.resolve(__dirname, `dist/renderer/window/${currentWindow}`);
 
   return {
     root: windowRoot,
