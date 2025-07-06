@@ -74,15 +74,15 @@ const featureList = ref([
   width: 100%;
   color: #333;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: #fff;
+  background: var(--el-bg-color);
   overflow-y: auto;
 }
 
 .hero-section {
   padding: 80px 40px 60px;
   text-align: center;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  border-bottom: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, var(--el-bg-color) 0%, var(--el-bg-color) 100%);
+  border-bottom: 1px solid var(--el-border-color);
 }
 
 .logo-container {
@@ -109,7 +109,7 @@ const featureList = ref([
   font-size: 48px;
   font-weight: 700;
   margin: 0 0 16px;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--el-color-primary), var(--el-color-primary-light-3));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -119,7 +119,7 @@ const featureList = ref([
 .description {
   font-size: 20px;
   margin: 0;
-  color: #64748b;
+  color: var(--el-text-color-regular);
   line-height: 1.6;
 }
 
@@ -134,7 +134,7 @@ const featureList = ref([
   font-weight: 600;
   text-align: center;
   margin: 0 0 48px;
-  color: #1e293b;
+  color: var(--el-text-color-regular);
 }
 
 .feature-grid {
@@ -184,7 +184,7 @@ const featureList = ref([
 .card-title {
   font-size: 18px;
   font-weight: 600;
-  color: #fff;
+  color: var(--el-text-color-light);
 }
 
 .feature-card :deep(.el-card__body) {

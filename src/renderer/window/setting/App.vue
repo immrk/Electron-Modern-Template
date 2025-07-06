@@ -40,44 +40,19 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import { useDark } from "@vueuse/core";
+import { ref } from "vue";
+import { useTheme } from "../../composables/useThemeVue";
 
 const activeName = ref("theme");
 const language = ref("system");
-const isDark = useDark();
-const themeColor = ref("light");
+
+// 使用统一的主题管理
+const { themeColor, changeTheme } = useTheme();
+console.log("setting themeColor:", themeColor.value);
 
 const handleThemeChange = (value: string) => {
-  window.system.changeTheme(value);
-  if (value === "system") {
-    initTheme();
-  } else {
-    isDark.value = themeColor.value === "dark";
-  }
+  changeTheme(value as "light" | "dark" | "system");
 };
-
-const initTheme = () => {
-  window.system
-    .getTheme()
-    .then((theme: { data: { storeTheme: string | undefined; systemTheme: string } }) => {
-      themeColor.value = theme.data.storeTheme || "system";
-      if (themeColor.value === "system") {
-        isDark.value = theme.data.systemTheme === "dark";
-      } else {
-        isDark.value = themeColor.value === "dark";
-      }
-    });
-};
-
-onMounted(() => {
-  // 初始化主题
-  initTheme();
-  // 监听主题变化
-  window.system.onChangeTheme((theme: string) => {
-    initTheme();
-  });
-});
 </script>
 
 <style scoped>
