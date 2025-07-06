@@ -25,8 +25,8 @@ try {
   console.log('🌐 复制 i18n 文件...');
   
   // 复制 locales 目录
-  const sourceLocalesDir = join(projectRoot, 'src', 'i18n', 'locales');
-  const targetLocalesDir = join(projectRoot, 'dist', 'i18n', 'locales');
+  const sourceLocalesDir = join(projectRoot, 'src', 'main', 'i18n', 'locales');
+  const targetLocalesDir = join(projectRoot, 'dist', 'main', 'i18n', 'locales');
   
   // 确保目标目录存在
   if (!existsSync(targetLocalesDir)) {

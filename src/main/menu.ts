@@ -1,7 +1,7 @@
 import { Menu, MenuItemConstructorOptions, BrowserWindow, app } from 'electron'
 import { getAllMenuConfigs } from '../config/menuConfig.js'
 import { WindowManager } from './windowManager.js'
-import { t } from './i18n.js'
+import { t } from './i18n/index.js'
 
 // 创建主菜单模板
 const createMainMenuTemplate = (windowManager: WindowManager): MenuItemConstructorOptions[] => {

@@ -3,7 +3,7 @@ import { wrapAsyncOperation } from '../utils/response.js'
 import Store from 'electron-store'
 import { createMenu } from '../../menu.js'
 import { windowManager } from '../../windowManager.js'
-import { setLanguage, getCurrentLanguage, getSupportedLanguages, t, SupportedLanguages } from '../../i18n.js'
+import { setLanguage, SupportedLanguages } from '../../i18n/index.js'
 
 const store = new Store()
 

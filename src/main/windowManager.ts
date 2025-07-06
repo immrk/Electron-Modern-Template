@@ -41,8 +41,8 @@ export class WindowManager {
     // 在开发环境中，preload 脚本路径需要指向编译后的文件
     const isDev = process.env.NODE_ENV === 'development'
     const preloadPath = isDev 
-      ? path.join(__dirname, '../preload/preload.js')
-      : path.join(__dirname, '../preload/preload.js')
+      ? path.join(__dirname, '../preload/index.js')
+      : path.join(__dirname, '../preload/index.js')
     
     console.log('Preload 脚本路径:', preloadPath)
     console.log("运行环境:", process.env.NODE_ENV)

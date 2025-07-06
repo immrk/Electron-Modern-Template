@@ -2,7 +2,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import i18next, { InitOptions, TOptions } from 'i18next'
 import Backend from 'i18next-fs-backend'
-import { i18nConfig } from '../config/i18nConfig.js'
+import { i18nConfig } from '../../config/i18nConfig.js'
 import Store from 'electron-store'
 import { app } from 'electron'
 
@@ -64,8 +64,8 @@ export const initMainI18n = async (): Promise<void> => {
     ns: ['menu'],
     defaultNS: 'menu',
     backend: {
-      loadPath: path.join(__dirname, '../i18n/locales/{{lng}}.json'),
-      addPath: path.join(__dirname, '../i18n/locales/{{lng}}.json'),
+      loadPath: path.join(__dirname, './locales/{{lng}}.json'),
+      addPath: path.join(__dirname, './locales/{{lng}}.json'),
     },
     interpolation: { escapeValue: false },
     debug: process.env.NODE_ENV === 'development',
