@@ -9,20 +9,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, '..');
 
-console.log('🚀 开始构建流程...');
+console.log('🚀 Starting build process...');
 
 try {
   // 1. 执行 tsc 命令
-  console.log('📝 执行 TypeScript 编译...');
+  console.log('📝 Executing TypeScript compilation...');
   execSync('tsc', { 
     cwd: projectRoot, 
     stdio: 'inherit',
     encoding: 'utf8'
   });
-  console.log('✅ TypeScript 编译完成');
+  console.log('✅ TypeScript compilation completed');
 
   // 2. 复制 i18n 文件
-  console.log('🌐 复制 i18n 文件...');
+  console.log('🌐 Copying i18n files...');
   
   // 复制 locales 目录
   const sourceLocalesDir = join(projectRoot, 'src', 'main', 'i18n', 'locales');
@@ -41,9 +41,9 @@ try {
     copyFileSync(sourceFile, targetFile);
   });
 
-  console.log('🎉 main构建流程完成！');
+  console.log('🎉 Main build process completed!');
   
 } catch (error) {
-  console.error('❌ 构建过程中出现错误:', error.message);
+  console.error('❌ Error occurred during build process:', error.message);
   process.exit(1);
 }

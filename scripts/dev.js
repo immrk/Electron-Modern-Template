@@ -35,12 +35,12 @@ async function loadWindowConfig() {
   }
 
   if (needBuild) {
-    log('编译 windowConfig.ts ...');
+    log('Compiling windowConfig.ts...');
     const cmd =
       `npx esbuild "${src}" --bundle --format=esm --platform=node ` +
       `--outfile="${cacheFile}" --log-level=error`;
     await exec(cmd);
-    log('windowConfig.ts 编译完成');
+    log('windowConfig.ts compilation completed');
   }
 
   const { WINDOW_LIST } = await import(pathToFileURL(cacheFile));
@@ -49,7 +49,7 @@ async function loadWindowConfig() {
 
 /** 启动单个 Vite 实例 */
 function startVite(name, { devPort }) {
-  log(`启动窗口 "${name}"，端口 ${devPort}`);
+  log(`Starting window "${name}" on port ${devPort}`);
   const child = spawn(
     'npx',
     ['vite'],
@@ -59,15 +59,15 @@ function startVite(name, { devPort }) {
       shell: true,
     },
   );
-  child.on('exit', (code) => warn(`窗口 "${name}" 退出，code=${code}`));
-  child.on('error', (err) => error(`窗口 "${name}" 启动失败:`, err));
+  child.on('exit', (code) => warn(`Window "${name}" exited, code=${code}`));
+  child.on('error', (err) => error(`Window "${name}" startup failed:`, err));
   return child;
 }
 
 /** 退出时清理所有子进程 */
 const children = new Set();
 function cleanup() {
-  warn('正在关闭所有开发服务器...');
+  warn('Shutting down all development servers...');
   for (const p of children) p.kill('SIGTERM');
   process.exit();
 }
@@ -81,16 +81,16 @@ function cleanup() {
   const onlyArg = process.argv.find((a) => a.startsWith('--only='));
   const pick = onlyArg ? onlyArg.split('=')[1].split(',') : null;
 
-  log('启动多窗口开发环境');
+  log('Starting multi-window development environment');
   for (const [name, cfg] of Object.entries(WINDOW_LIST)) {
     if (pick && !pick.includes(name)) continue;
     children.add(startVite(name, cfg));
   }
 
-  log('全部窗口已启动：');
+  log('All windows started:');
   Object.entries(WINDOW_LIST).forEach(([name, { devPort }]) => {
     if (!pick || pick.includes(name))
       console.log(`  • ${name}  →  http://localhost:${devPort}`);
   });
-  console.log('按 Ctrl+C 以停止');
+  console.log('Press Ctrl+C to stop');
 })();

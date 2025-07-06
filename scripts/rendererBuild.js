@@ -35,12 +35,12 @@ async function loadWindowConfig() {
   }
 
   if (needBuild) {
-    log('编译 windowConfig.ts ...');
+    log('Compiling windowConfig.ts...');
     const cmd =
       `npx esbuild "${src}" --bundle --format=esm --platform=node ` +
       `--outfile="${cacheFile}" --log-level=error`;
     await exec(cmd);
-    log('windowConfig.ts 编译完成');
+    log('windowConfig.ts compilation completed');
   }
 
   const { WINDOW_LIST } = await import(pathToFileURL(cacheFile));
@@ -49,7 +49,7 @@ async function loadWindowConfig() {
 
 /** 构建单个窗口 */
 async function buildWindow(name) {
-  log(`开始构建窗口 "${name}"...`);
+  log(`Starting build for window "${name}"...`);
   
   return new Promise((resolve, reject) => {
     const child = spawn(
@@ -64,16 +64,16 @@ async function buildWindow(name) {
     
     child.on('exit', (code) => {
       if (code === 0) {
-        log(`窗口 "${name}" 构建完成`);
+        log(`Window "${name}" build completed`);
         resolve();
       } else {
-        error(`窗口 "${name}" 构建失败，code=${code}`);
-        reject(new Error(`构建失败: ${name}`));
+        error(`Window "${name}" build failed, code=${code}`);
+        reject(new Error(`Build failed: ${name}`));
       }
     });
     
     child.on('error', (err) => {
-      error(`窗口 "${name}" 构建启动失败:`, err);
+      error(`Window "${name}" build startup failed:`, err);
       reject(err);
     });
   });
@@ -85,9 +85,9 @@ async function buildAllWindows(WINDOW_LIST) {
   
   try {
     await Promise.all(buildPromises);
-    log('所有窗口构建完成！');
+    log('All windows build completed!');
   } catch (err) {
-    error('构建过程中出现错误:', err);
+    error('Error occurred during build process:', err);
     process.exit(1);
   }
 }
@@ -102,24 +102,24 @@ async function buildAllWindows(WINDOW_LIST) {
     const pick = onlyArg ? onlyArg.split('=')[1].split(',') : null;
 
     if (pick) {
-      log(`仅构建指定窗口: ${pick.join(', ')}`);
+      log(`Building specified windows only: ${pick.join(', ')}`);
       const filteredWindows = {};
       for (const name of pick) {
         if (WINDOW_LIST[name]) {
           filteredWindows[name] = WINDOW_LIST[name];
         } else {
-          warn(`未找到窗口配置: ${name}`);
+          warn(`Window configuration not found: ${name}`);
         }
       }
       await buildAllWindows(filteredWindows);
     } else {
-      log('开始构建所有窗口...');
+      log('Starting build for all windows...');
       await buildAllWindows(WINDOW_LIST);
     }
 
-    log('构建完成！输出目录: dist/renderer/window/');
+    log('Build completed! Output directory: dist/renderer/window/');
   } catch (err) {
-    error('构建失败:', err);
+    error('Build failed:', err);
     process.exit(1);
   }
 })();
