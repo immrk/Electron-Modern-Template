@@ -9,13 +9,13 @@
             <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h1 class="title">Electron-Modern-Template</h1>
-        <p class="description">现代化Electron开发框架，让桌面应用开发更简单高效</p>
+        <h1 class="title">{{ $t('main.home.title') }}</h1>
+        <p class="description">{{ $t('main.home.description') }}</p>
       </div>
     </div>
     
     <div class="content-section">
-      <h2 class="section-title">核心特性</h2>
+      <h2 class="section-title">{{ $t('main.home.coreFeatures') }}</h2>
       <div class="feature-grid">
         <el-card
           class="feature-card"
@@ -43,26 +43,29 @@
 <script setup lang="ts">
 import { ref, h } from "vue";
 import { Platform, Monitor, Brush, Tools } from "@element-plus/icons-vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const featureList = ref([
   {
-    title: "现代化开发体验",
-    description: "基于Vue3(即将支持React) + TypeScript + Vite构建，提供热重载、类型安全等现代化开发体验",
+    title: t('main.home.features.modernDev.title'),
+    description: t('main.home.features.modernDev.description'),
     icon: () => h(Monitor)
   },
   {
-    title: "跨平台兼容",
-    description: "支持Windows、macOS、Linux三大主流操作系统，一次开发，多平台部署",
+    title: t('main.home.features.crossPlatform.title'),
+    description: t('main.home.features.crossPlatform.description'),
     icon: () => h(Platform)
   },
   {
-    title: "自动按需导入的UI组件",
-    description: "集成Element Plus组件库，提供美观且功能丰富的用户界面组件的同时, 无需手动导入，支持自定义主题",
+    title: t('main.home.features.uiComponents.title'),
+    description: t('main.home.features.uiComponents.description'),
     icon: () => h(Brush)
   },
   {
-    title: "i18n国际化支持",
-    description: "Electron主进程、渲染进程、UI组件均已集成国际化，支持多语言切换；快速构建多语言应用",
+    title: t('main.home.features.i18n.title'),
+    description: t('main.home.features.i18n.description'),
     icon: () => h(Tools)
   },
 ]);

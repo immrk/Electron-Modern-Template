@@ -1,22 +1,22 @@
 <template>
   <div class="system-container">
-    <el-alert title="该页面信息来源于主进程，通过 preload 文件暴露给渲染进程，作为主进程与渲染进程通信样例" type="primary" :closable="false" />
+    <el-alert :title="$t('main.system.alert')" type="primary" :closable="false" />
     <el-card shadow="never">
-      <el-descriptions title="系统信息" :column="1" border>
-        <el-descriptions-item label="Node.js 版本">
-          {{ info.node || "加载中..." }}
+      <el-descriptions :title="$t('main.system.title')" :column="1" border>
+        <el-descriptions-item :label="$t('main.system.nodeVersion')">
+          {{ info.node || $t('main.system.loading') }}
         </el-descriptions-item>
-        <el-descriptions-item label="Chrome 版本">
-          {{ info.chrome || "加载中..." }}
+        <el-descriptions-item :label="$t('main.system.chromeVersion')">
+          {{ info.chrome || $t('main.system.loading') }}
         </el-descriptions-item>
-        <el-descriptions-item label="Electron 版本">
-          {{ info.electron || "加载中..." }}
+        <el-descriptions-item :label="$t('main.system.electronVersion')">
+          {{ info.electron || $t('main.system.loading') }}
         </el-descriptions-item>
-        <el-descriptions-item label="Ping 结果">
+        <el-descriptions-item :label="$t('main.system.pingResult')">
           <template #default>
-            <span>{{ info.ping || "暂未测试" }}</span>
+            <span>{{ info.ping || $t('main.system.notTested') }}</span>
             <el-button size="small" class="ml-2" @click="refreshPing"
-              >Ping</el-button
+              >{{ $t('main.system.ping') }}</el-button
             >
           </template>
         </el-descriptions-item>
@@ -27,6 +27,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
+import { ElMessage } from "element-plus";
+
+const { t } = useI18n();
 
 interface VersionsInfo {
   node: string;
@@ -56,9 +60,9 @@ const refreshPing = async () => {
   try {
     const result = await versionsAPI.ping();
     info.value.ping = result;
-    ElMessage.success(`Ping 成功: ${result}`);
+    ElMessage.success(t('main.system.pingSuccess', { result }));
   } catch (error) {
-    ElMessage.error("Ping 失败");
+    ElMessage.error(t('main.system.pingFailed'));
   }
 };
 

@@ -6,32 +6,32 @@
       class="demo-tabs"
       tab-position="left"
     >
-      <el-tab-pane label="主题" name="theme">
+      <el-tab-pane :label="$t('setting.theme.label')" name="theme">
         <div class="content">
           <el-alert
-            description="切换软件配色主题，默认跟随系统"
+            :description="$t('setting.theme.description')"
             type="primary"
             size="small"
             :closable="false"
           />
           <el-radio-group v-model="themeColor" @change="handleThemeChange">
-            <el-radio value="light">明亮</el-radio>
-            <el-radio value="dark">暗黑</el-radio>
-            <el-radio value="system">跟随系统</el-radio>
+            <el-radio value="light">{{ $t('setting.theme.light') }}</el-radio>
+            <el-radio value="dark">{{ $t('setting.theme.dark') }}</el-radio>
+            <el-radio value="system">{{ $t('setting.theme.system') }}</el-radio>
           </el-radio-group>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="语言" name="language">
+      <el-tab-pane :label="$t('setting.language.label')" name="language">
         <div class="content">
           <el-alert
-            description="语言更改立即生效"
+            :description="$t('setting.language.description')"
             type="primary"
             :closable="false"
           />
-          <el-select v-model="currentLanguage" placeholder="请选择语言" @change="handleLanguageChange">
-            <el-option label="跟随系统" value="system" />
-            <el-option label="中文" value="zh-CN" />
-            <el-option label="英文" value="en-US" />
+          <el-select v-model="currentLanguage" :placeholder="$t('setting.language.placeholder')" @change="handleLanguageChange">
+            <el-option :label="$t('setting.language.system')" value="system" />
+            <el-option :label="$t('setting.language.chinese')" value="zh-CN" />
+            <el-option :label="$t('setting.language.english')" value="en-US" />
           </el-select>
         </div>
       </el-tab-pane>
@@ -41,8 +41,11 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useTheme } from "../../composables/useThemeVue";
 import { useLanguage } from "../../composables/useLanguageVue";
+
+const { t } = useI18n();
 
 const activeName = ref("theme");
 

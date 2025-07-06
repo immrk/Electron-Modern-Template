@@ -1,7 +1,7 @@
 <template>
   <div class="window-container">
     <el-alert 
-      title="该页面演示窗口管理API的使用，通过preload文件暴露的windowManager接口与主进程通信" 
+      :title="$t('main.window.alert')" 
       type="primary" 
       :closable="false" 
       class="alert-component"
@@ -11,60 +11,60 @@
     <el-card shadow="never" class="operation-card">
       <template #header>
         <div class="card-header">
-          <span>窗口操作</span>
+          <span>{{ $t('main.window.operations.title') }}</span>
           <el-button type="primary" size="small" @click="refreshWindowList">
-            刷新窗口列表
+            {{ $t('main.window.operations.refreshList') }}
           </el-button>
         </div>
       </template>
       
       <div class="operation-section">
-        <h4>基础窗口操作</h4>
+        <h4>{{ $t('main.window.operations.basicOperations') }}</h4>
         <div class="button-group">
           <el-button type="success" @click="createSettingWindow">
-            创建设置窗口
+            {{ $t('main.window.operations.createSetting') }}
           </el-button>
           <el-button type="primary" @click="showAllWindows">
-            显示所有窗口
+            {{ $t('main.window.operations.showAll') }}
           </el-button>
           <el-button type="warning" @click="hideAllWindows">
-            隐藏所有窗口
+            {{ $t('main.window.operations.hideAll') }}
           </el-button>
           <el-button type="danger" @click="closeAllWindows">
-            关闭所有窗口
+            {{ $t('main.window.operations.closeAll') }}
           </el-button>
         </div>
       </div>
 
       <div class="operation-section">
-        <h4>窗口状态控制</h4>
+        <h4>{{ $t('main.window.operations.statusControl') }}</h4>
         <div class="button-group">
           <el-button @click="focusMainWindow">
-            聚焦主窗口
+            {{ $t('main.window.operations.focusMain') }}
           </el-button>
           <el-button @click="minimizeMainWindow">
-            最小化主窗口
+            {{ $t('main.window.operations.minimizeMain') }}
           </el-button>
           <el-button @click="maximizeMainWindow">
-            最大化主窗口
+            {{ $t('main.window.operations.maximizeMain') }}
           </el-button>
           <el-button @click="restoreMainWindow">
-            恢复主窗口
+            {{ $t('main.window.operations.restoreMain') }}
           </el-button>
         </div>
       </div>
 
       <div class="operation-section">
-        <h4>窗口信息查询</h4>
+        <h4>{{ $t('main.window.operations.infoQuery') }}</h4>
         <div class="button-group">
           <el-button @click="checkWindowStatus">
-            检查窗口状态
+            {{ $t('main.window.operations.checkStatus') }}
           </el-button>
           <el-button @click="getVisibleCount">
-            获取可见窗口数
+            {{ $t('main.window.operations.getVisibleCount') }}
           </el-button>
           <el-button @click="getAllWindows">
-            获取所有窗口
+            {{ $t('main.window.operations.getAllWindows') }}
           </el-button>
         </div>
       </div>
@@ -73,42 +73,42 @@
     <!-- 窗口状态显示区域 -->
     <el-card shadow="never" class="status-card">
       <template #header>
-        <span>窗口状态</span>
+        <span>{{ $t('main.window.status.title') }}</span>
       </template>
       
-      <el-descriptions title="当前窗口信息" :column="2" border>
-        <el-descriptions-item label="主窗口存在">
-          {{ windowStatus.mainExists ? '是' : '否' }}
+      <el-descriptions :title="$t('main.window.status.currentWindowInfo')" :column="2" border>
+        <el-descriptions-item :label="$t('main.window.status.mainExists')">
+          {{ windowStatus.mainExists ? $t('common.yes') : $t('common.no') }}
         </el-descriptions-item>
-        <el-descriptions-item label="主窗口可见">
-          {{ windowStatus.mainVisible ? '是' : '否' }}
+        <el-descriptions-item :label="$t('main.window.status.mainVisible')">
+          {{ windowStatus.mainVisible ? $t('common.yes') : $t('common.no') }}
         </el-descriptions-item>
-        <el-descriptions-item label="可见窗口数量">
+        <el-descriptions-item :label="$t('main.window.status.visibleCount')">
           {{ windowStatus.visibleCount }}
         </el-descriptions-item>
-        <el-descriptions-item label="总窗口数量">
+        <el-descriptions-item :label="$t('main.window.status.totalCount')">
           {{ windowStatus.totalCount }}
         </el-descriptions-item>
       </el-descriptions>
 
       <div class="window-list" v-if="windowList.length > 0">
-        <h4>窗口列表</h4>
+        <h4>{{ $t('main.window.status.windowList') }}</h4>
         <el-table :data="windowList" style="width: 100%">
-          <el-table-column prop="name" label="窗口名称" />
-          <el-table-column prop="visible" label="可见状态">
+          <el-table-column prop="name" :label="$t('main.window.status.windowName')" />
+          <el-table-column prop="visible" :label="$t('main.window.status.visibleStatus')">
             <template #default="scope">
               <el-tag :type="scope.row.visible ? 'success' : 'info'">
-                {{ scope.row.visible ? '可见' : '隐藏' }}
+                {{ scope.row.visible ? $t('main.window.status.visible') : $t('main.window.status.hidden') }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column :label="$t('main.window.status.actions')">
             <template #default="scope">
               <el-button size="small" @click="focusWindow(scope.row.name)">
-                聚焦
+                {{ $t('main.window.status.focus') }}
               </el-button>
               <el-button size="small" @click="closeWindow(scope.row.name)">
-                关闭
+                {{ $t('main.window.status.close') }}
               </el-button>
             </template>
           </el-table-column>
@@ -120,6 +120,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { ElMessage } from 'element-plus'
+
+const { t } = useI18n()
 
 interface WindowInfo {
   name: string
@@ -145,7 +149,7 @@ const windowStatus = ref<WindowStatus>({
 // 刷新窗口列表
 const refreshWindowList = async () => {
   if (!windowManager) {
-    ElMessage.error('windowManager API 不可用')
+    ElMessage.error(t('main.window.messages.windowManagerUnavailable'))
     return
   }
 
@@ -175,9 +179,9 @@ const refreshWindowList = async () => {
       windowStatus.value.mainVisible = mainVisibleResponse.data
     }
     
-    ElMessage.success('窗口列表已刷新')
+    ElMessage.success(t('main.window.messages.listRefreshed'))
   } catch (error) {
-    ElMessage.error('刷新窗口列表失败')
+    ElMessage.error(t('main.window.messages.refreshFailed'))
     console.error(error)
   }
 }
@@ -188,7 +192,7 @@ const createSettingWindow = async () => {
   try {
     const response = await windowManager.createWindow('setting')
   } catch (error) {
-    ElMessage.error('创建设置窗口失败')
+    ElMessage.error(t('main.window.messages.createSettingFailed'))
     console.error(error)
   }
 }
@@ -204,10 +208,10 @@ const showAllWindows = async () => {
         console.warn(`显示窗口 ${window.name} 失败:`, response.error)
       }
     }
-    ElMessage.success('所有窗口已显示')
+    ElMessage.success(t('main.window.messages.allWindowsShown'))
     refreshWindowList()
   } catch (error) {
-    ElMessage.error('显示窗口失败')
+    ElMessage.error(t('main.window.messages.showWindowsFailed'))
     console.error(error)
   }
 }
@@ -223,10 +227,10 @@ const hideAllWindows = async () => {
         console.warn(`隐藏窗口 ${window.name} 失败:`, response.error)
       }
     }
-    ElMessage.success('所有窗口已隐藏')
+    ElMessage.success(t('main.window.messages.allWindowsHidden'))
     refreshWindowList()
   } catch (error) {
-    ElMessage.error('隐藏窗口失败')
+    ElMessage.error(t('main.window.messages.hideWindowsFailed'))
     console.error(error)
   }
 }
@@ -244,10 +248,10 @@ const closeAllWindows = async () => {
         }
       }
     }
-    ElMessage.success('所有非主窗口已关闭')
+    ElMessage.success(t('main.window.messages.nonMainWindowsClosed'))
     refreshWindowList()
   } catch (error) {
-    ElMessage.error('关闭窗口失败')
+    ElMessage.error(t('main.window.messages.closeWindowsFailed'))
     console.error(error)
   }
 }
@@ -259,12 +263,12 @@ const focusMainWindow = async () => {
   try {
     const response = await windowManager.focusWindow('main')
     if (response.success) {
-      ElMessage.success('主窗口已聚焦')
+      ElMessage.success(t('main.window.messages.mainWindowFocused'))
     } else {
-      ElMessage.error(response.error || '聚焦主窗口失败')
+      ElMessage.error(response.error || t('main.window.messages.focusMainFailed'))
     }
   } catch (error) {
-    ElMessage.error('聚焦主窗口失败')
+    ElMessage.error(t('main.window.messages.focusMainFailed'))
     console.error(error)
   }
 }
@@ -276,12 +280,12 @@ const minimizeMainWindow = async () => {
   try {
     const response = await windowManager.minimizeWindow('main')
     if (response.success) {
-      ElMessage.success('主窗口已最小化')
+      ElMessage.success(t('main.window.messages.mainWindowMinimized'))
     } else {
-      ElMessage.error(response.error || '最小化主窗口失败')
+      ElMessage.error(response.error || t('main.window.messages.minimizeMainFailed'))
     }
   } catch (error) {
-    ElMessage.error('最小化主窗口失败')
+    ElMessage.error(t('main.window.messages.minimizeMainFailed'))
     console.error(error)
   }
 }
@@ -293,12 +297,12 @@ const maximizeMainWindow = async () => {
   try {
     const response = await windowManager.maximizeWindow('main')
     if (response.success) {
-      ElMessage.success('主窗口已最大化')
+      ElMessage.success(t('main.window.messages.mainWindowMaximized'))
     } else {
-      ElMessage.error(response.error || '最大化主窗口失败')
+      ElMessage.error(response.error || t('main.window.messages.maximizeMainFailed'))
     }
   } catch (error) {
-    ElMessage.error('最大化主窗口失败')
+    ElMessage.error(t('main.window.messages.maximizeMainFailed'))
     console.error(error)
   }
 }
@@ -310,12 +314,12 @@ const restoreMainWindow = async () => {
   try {
     const response = await windowManager.restoreWindow('main')
     if (response.success) {
-      ElMessage.success('主窗口已恢复')
+      ElMessage.success(t('main.window.messages.mainWindowRestored'))
     } else {
-      ElMessage.error(response.error || '恢复主窗口失败')
+      ElMessage.error(response.error || t('main.window.messages.restoreMainFailed'))
     }
   } catch (error) {
-    ElMessage.error('恢复主窗口失败')
+    ElMessage.error(t('main.window.messages.restoreMainFailed'))
     console.error(error)
   }
 }
@@ -323,7 +327,7 @@ const restoreMainWindow = async () => {
 // 检查窗口状态
 const checkWindowStatus = async () => {
   await refreshWindowList()
-  ElMessage.info('窗口状态已检查')
+  ElMessage.info(t('main.window.messages.statusChecked'))
 }
 
 // 获取可见窗口数
@@ -333,12 +337,12 @@ const getVisibleCount = async () => {
   try {
     const response = await windowManager.getVisibleWindowCount()
     if (response.success && typeof response.data === 'number') {
-      ElMessage.info(`当前可见窗口数量: ${response.data}`)
+      ElMessage.info(t('main.window.messages.visibleCountInfo', { count: response.data }))
     } else {
-      ElMessage.error(response.error || '获取可见窗口数失败')
+      ElMessage.error(response.error || t('main.window.messages.getVisibleCountFailed'))
     }
   } catch (error) {
-    ElMessage.error('获取可见窗口数失败')
+    ElMessage.error(t('main.window.messages.getVisibleCountFailed'))
     console.error(error)
   }
 }
@@ -346,7 +350,7 @@ const getVisibleCount = async () => {
 // 获取所有窗口
 const getAllWindows = async () => {
   await refreshWindowList()
-  ElMessage.info(`当前共有 ${windowList.value.length} 个窗口`)
+  ElMessage.info(t('main.window.messages.totalWindowsInfo', { count: windowList.value.length }))
 }
 
 // 聚焦指定窗口
@@ -356,12 +360,12 @@ const focusWindow = async (windowName: string) => {
   try {
     const response = await windowManager.focusWindow(windowName)
     if (response.success) {
-      ElMessage.success(`窗口 ${windowName} 已聚焦`)
+      ElMessage.success(t('main.window.messages.windowFocused', { name: windowName }))
     } else {
-      ElMessage.error(response.error || `聚焦窗口 ${windowName} 失败`)
+      ElMessage.error(response.error || t('main.window.messages.focusWindowFailed', { name: windowName }))
     }
   } catch (error) {
-    ElMessage.error(`聚焦窗口 ${windowName} 失败`)
+    ElMessage.error(t('main.window.messages.focusWindowFailed', { name: windowName }))
     console.error(error)
   }
 }
@@ -373,13 +377,13 @@ const closeWindow = async (windowName: string) => {
   try {
     const response = await windowManager.closeWindow(windowName)
     if (response.success) {
-      ElMessage.success(`窗口 ${windowName} 已关闭`)
+      ElMessage.success(t('main.window.messages.windowClosed', { name: windowName }))
       refreshWindowList()
     } else {
-      ElMessage.error(response.error || `关闭窗口 ${windowName} 失败`)
+      ElMessage.error(response.error || t('main.window.messages.closeWindowFailed', { name: windowName }))
     }
   } catch (error) {
-    ElMessage.error(`关闭窗口 ${windowName} 失败`)
+    ElMessage.error(t('main.window.messages.closeWindowFailed', { name: windowName }))
     console.error(error)
   }
 }
@@ -387,7 +391,7 @@ const closeWindow = async (windowName: string) => {
 // 监听窗口状态变化
 const handleWindowStateChanged = (event: any, data: any) => {
   console.log('窗口状态变化:', data)
-  ElMessage.info(`窗口状态变化: ${data.windowName} - ${data.action}`)
+  ElMessage.info(t('main.window.messages.windowStateChanged', { windowName: data.windowName, action: data.action }))
   refreshWindowList()
 }
 
