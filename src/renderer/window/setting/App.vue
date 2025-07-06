@@ -24,12 +24,11 @@
       <el-tab-pane label="语言" name="language">
         <div class="content">
           <el-alert
-            description="语言更改即使生效"
+            description="语言更改立即生效"
             type="primary"
             :closable="false"
           />
-          <p>当前语言: {{ $t("hello") }}</p>
-          <el-select v-model="language" placeholder="请选择语言" @change="handleLanguageChange">
+          <el-select v-model="currentLanguage" placeholder="请选择语言" @change="handleLanguageChange">
             <el-option label="跟随系统" value="system" />
             <el-option label="中文" value="zh-CN" />
             <el-option label="英文" value="en-US" />
@@ -43,28 +42,24 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useTheme } from "../../composables/useThemeVue";
-import { useI18n } from 'vue-i18n';
-
-const { locale } = useI18n();
+import { useLanguage } from "../../composables/useLanguageVue";
 
 const activeName = ref("theme");
-const language = ref("system");
 
 // 使用统一的主题管理
 const { themeColor, changeTheme } = useTheme();
 console.log("setting themeColor:", themeColor.value);
+
+// 使用统一的语言管理
+const { currentLanguage, changeLanguage } = useLanguage();
+console.log("setting currentLanguage:", currentLanguage.value);
 
 const handleThemeChange = (value: string) => {
   changeTheme(value as "light" | "dark" | "system");
 };
 
 const handleLanguageChange = (value: string) => {
-  if (value === "system") {
-    return;
-  } else {
-    locale.value = value as "zh-CN" | "en-US";
-    window.i18n.setLanguage(value);
-  }
+  changeLanguage(value as "system" | "zh-CN" | "en-US");
 };
 </script>
 

@@ -11,6 +11,10 @@ interface SystemAPI {
   changeTheme: (theme: string) => Promise<any>
   getTheme: () => Promise<{ data: { storeTheme: string | undefined; systemTheme: string } }>
   onChangeTheme: (callback: (theme: string) => void) => void
+  // 语言管理相关方法
+  changeLanguage: (language: string) => Promise<any>
+  getLanguage: () => Promise<{ data: { storeLanguage: string | undefined; systemLanguage: string } }>
+  onChangeLanguage: (callback: (language: string) => void) => void
 }
 
 // 窗口管理 API 类型定义

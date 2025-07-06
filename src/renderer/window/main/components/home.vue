@@ -10,7 +10,6 @@
           </svg>
         </div>
         <h1 class="title">Electron-Modern-Template</h1>
-        <div>{{ $t('hello') }}</div>
         <p class="description">现代化Electron开发框架，让桌面应用开发更简单高效</p>
       </div>
     </div>

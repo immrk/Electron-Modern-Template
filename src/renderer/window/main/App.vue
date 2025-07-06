@@ -10,16 +10,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import leftBar from './components/leftBar.vue';
 import home from './components/home.vue';
 import system from './components/system.vue';
 import windowComponent from './components/window.vue';
 import { MenuEnum } from './constants';
 import { useTheme } from '../../composables/useThemeVue';
-import { useI18n } from 'vue-i18n';
-
-const { t, locale } = useI18n();
+import { useLanguage } from '../../composables/useLanguageVue';
 
 const currentMenu = ref(MenuEnum.HOME);
 
@@ -31,17 +29,9 @@ const handleMenuClick = (name: MenuEnum) => {
 const { themeColor } = useTheme();
 console.log("main themeColor:", themeColor.value);
 
-onMounted(async () => {
-  // 获取当前语言
-  const language = await window.i18n.getCurrentLanguage();
-  locale.value = language;
-  console.log("main language:", language);
-  // 监听主进程语言变化事件
-  window.i18n.onLanguageChanged((language: string) => {
-    locale.value = language;
-    console.log("main language changed:", language);
-  });
-});
+// 使用统一的语言管理
+const { currentLanguage } = useLanguage();
+console.log("main currentLanguage:", currentLanguage.value);
 </script>
 
 <style scoped>

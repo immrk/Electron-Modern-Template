@@ -9,6 +9,13 @@ export function exposeSystemAPI() {
         callback(theme);
       });
     },
+    changeLanguage: (language: string) => ipcRenderer.invoke("system:changeLanguage", language),
+    getLanguage: () => ipcRenderer.invoke("system:getLanguage"),
+    onChangeLanguage: (callback: (language: string) => void) => {
+      ipcRenderer.on("system:changeLanguage", (event, language: string) => {
+        callback(language);
+      });
+    },
   });
 
   console.log("system API 已暴露");

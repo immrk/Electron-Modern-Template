@@ -1,7 +1,9 @@
-import { ipcMain, shell, clipboard, nativeTheme, BrowserWindow } from 'electron'
+import { ipcMain, shell, clipboard, nativeTheme, BrowserWindow, app } from 'electron'
 import { wrapAsyncOperation } from '../utils/response.js'
 import Store from 'electron-store'
-
+import { createMenu } from '../../menu.js'
+import { windowManager } from '../../windowManager.js'
+import { setLanguage, getCurrentLanguage, getSupportedLanguages, t, SupportedLanguages } from '../../i18n.js'
 
 const store = new Store()
 
@@ -95,6 +97,43 @@ export const setupSystemHandlers = (): void => {
   ipcMain.handle('system:getMemoryInfo', async () => {
     return wrapAsyncOperation(async () => {
       return process.getSystemMemoryInfo()
+    })
+  })
+
+  // 获取系统语言
+  ipcMain.handle('system:getLanguage', async () => {
+    return wrapAsyncOperation(async () => {
+      // 获取store中的语言
+      const storeLanguage = store.get('language')
+      const systemLanguage = app.getLocale() as string
+      return {
+        storeLanguage: storeLanguage,
+        systemLanguage: systemLanguage
+      }
+    })
+  })
+
+  // 语言切换
+  ipcMain.handle('system:changeLanguage', async (event, language: string) => {
+    return wrapAsyncOperation(async () => {
+      store.set('language', language)
+      if (language === 'system') {
+        language = app.getLocale() as string
+      } else {
+        await setLanguage(language as SupportedLanguages)
+      }
+
+      // 重新创建菜单以应用新语言
+      createMenu(windowManager)
+      
+      // 向所有渲染进程发送语言变化事件
+      BrowserWindow.getAllWindows().forEach(window => {
+        if (!window.isDestroyed()) {
+          window.webContents.send('system:changeLanguage', language)
+        }
+      })
+      
+      return undefined
     })
   })
 } 

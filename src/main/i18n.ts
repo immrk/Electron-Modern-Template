@@ -87,7 +87,6 @@ export const setLanguage = async (
   language: SupportedLanguages,
 ): Promise<void> => {
   if (!isLanguageSupported(language)) return
-  store.set('language', language)
   await i18next.changeLanguage(language)
 }
 
