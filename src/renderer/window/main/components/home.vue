@@ -41,13 +41,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, h } from "vue";
+import { ref, h, computed } from "vue";
 import { Platform, Monitor, Brush, Tools } from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
-const featureList = ref([
+const featureList = computed(() => [
   {
     title: t('main.home.features.modernDev.title'),
     description: t('main.home.features.modernDev.description'),
