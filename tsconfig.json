@@ -21,10 +21,12 @@
       "allowSyntheticDefaultImports": true
     },
     "include": [
-      "src/renderer/**/*.d.ts"
+      "src/**/*.ts",
+      "src/**/*.d.ts",
     ],
     "exclude": [
       "./*.ts",
+      "src/renderer/**/*.ts",
       "node_modules",
       "dist",
     ]
