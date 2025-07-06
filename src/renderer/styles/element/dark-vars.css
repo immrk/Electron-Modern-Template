@@ -1,0 +1,18 @@
+/* 暗色模式下的自定义颜色变量 */
+html.dark {
+  /* 主色 */
+  --el-color-primary: #6a7ade;
+  --el-color-primary-light-3: #6e53a7;
+  
+  /* 成功色 */
+  --el-color-success: #1dc779;
+  
+  /* 警告色 */
+  --el-color-warning: #ffb302;
+  
+  /* 危险色 */
+  --el-color-danger: #e26237;
+  
+  /* 错误色 */
+  --el-color-error: #cf4444;
+} 

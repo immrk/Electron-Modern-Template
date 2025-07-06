@@ -30,7 +30,10 @@ export default defineConfig(async () => {
   );
 
   /* 4. 打包输出路径 */
-  const outDir = path.resolve(__dirname, `dist/renderer/window/${currentWindow}`);
+  const outDir = path.resolve(
+    __dirname,
+    `dist/renderer/window/${currentWindow}`
+  );
 
   return {
     root: windowRoot,
@@ -39,7 +42,7 @@ export default defineConfig(async () => {
       vue(),
       AutoImport({
         resolvers: [
-          ElementPlusResolver({ importStyle: 'sass' }),
+          ElementPlusResolver({ importStyle: "sass" }),
           IconsResolver({
             prefix: "Icon",
           }),
@@ -48,7 +51,7 @@ export default defineConfig(async () => {
       }),
       Components({
         resolvers: [
-          ElementPlusResolver({ importStyle: 'sass' }),
+          ElementPlusResolver({ importStyle: "sass" }),
           IconsResolver({
             enabledCollections: ["ep"],
           }),
@@ -62,7 +65,10 @@ export default defineConfig(async () => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "~/styles/element/index.scss" as *;`,
+          // 引入element-plus自定义覆盖样式以及暗色模式样式
+          additionalData: `@use "~/styles/element/index.scss" as *; 
+          @use "element-plus/theme-chalk/dark/css-vars.css" as *; 
+          @use "~/styles/element/dark-vars.css" as *;`,
         },
       },
     },

@@ -14,6 +14,6 @@ export const WINDOW_LIST: { [key: string]: any } = {
         width: 500,
         height: 400,
         // title: '设置窗口',
-        devPort: 11070,
+        devPort: 11070, 
     }
 }
