@@ -10,13 +10,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import leftBar from './components/leftBar.vue';
 import home from './components/home.vue';
 import system from './components/system.vue';
 import windowComponent from './components/window.vue';
 import { MenuEnum } from './constants';
 import { useTheme } from '../../composables/useThemeVue';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
 
 const currentMenu = ref(MenuEnum.HOME);
 
@@ -27,6 +30,18 @@ const handleMenuClick = (name: MenuEnum) => {
 // 使用统一的主题管理
 const { themeColor } = useTheme();
 console.log("main themeColor:", themeColor.value);
+
+onMounted(async () => {
+  // 获取当前语言
+  const language = await window.i18n.getCurrentLanguage();
+  locale.value = language;
+  console.log("main language:", language);
+  // 监听主进程语言变化事件
+  window.i18n.onLanguageChanged((language: string) => {
+    locale.value = language;
+    console.log("main language changed:", language);
+  });
+});
 </script>
 
 <style scoped>

@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron'
+import { BrowserWindow, ipcMain } from 'electron'
 import { setLanguage, getCurrentLanguage, getSupportedLanguages, t } from '../../i18n.js'
 import { createMenu } from '../../menu.js'
 import { windowManager } from '../../windowManager.js'
@@ -20,24 +20,19 @@ export const setupI18nHandlers = (): void => {
 
   // 设置语言
   ipcMain.handle('i18n:setLanguage', async (event, language: SupportedLanguages) => {
-    try {
       await setLanguage(language)
       
       // 重新创建菜单以应用新语言
       createMenu(windowManager)
       
       // 通知所有渲染进程语言已更改
-      windowManager.getAllWindows().forEach(windowInstance => {
-        if (!windowInstance.window.isDestroyed()) {
-          windowInstance.window.webContents.send('i18n:languageChanged', language)
+      BrowserWindow.getAllWindows().forEach(window => {
+        if (!window.isDestroyed()) {
+          window.webContents.send('i18n:languageChanged', language)
         }
       })
       
-      return { success: true, language }
-    } catch (error) {
-      console.error('Failed to set language:', error)
-      return { success: false, error: (error as Error).message }
-    }
+      return undefined
   })
 
   // 获取翻译文本
