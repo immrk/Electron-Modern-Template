@@ -20,10 +20,12 @@
       "types": ["vite/client", "node"],
       "allowSyntheticDefaultImports": true
     },
+    "include": [
+      "src/renderer/**/*.d.ts"
+    ],
     "exclude": [
       "./*.ts",
       "node_modules",
       "dist",
-      "src/renderer"
     ]
   }

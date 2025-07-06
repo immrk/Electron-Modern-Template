@@ -47,7 +47,7 @@ export default defineConfig(async () => {
             prefix: "Icon",
           }),
         ],
-        dts: false,
+        dts: true,
       }),
       Components({
         resolvers: [
@@ -56,7 +56,7 @@ export default defineConfig(async () => {
             enabledCollections: ["ep"],
           }),
         ],
-        dts: false,
+        dts: true,
       }),
       Icons({
         autoInstall: true,
