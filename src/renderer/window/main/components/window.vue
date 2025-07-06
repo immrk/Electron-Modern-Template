@@ -186,11 +186,7 @@ const refreshWindowList = async () => {
 const createSettingWindow = async () => {
   if (!windowManager) return
   try {
-    const response = await windowManager.createWindow('setting', {
-      width: 800,
-      height: 600,
-      title: '设置窗口',
-    })
+    const response = await windowManager.createWindow('setting')
   } catch (error) {
     ElMessage.error('创建设置窗口失败')
     console.error(error)
