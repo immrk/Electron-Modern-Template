@@ -7,11 +7,13 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
+import { vitePluginFakeServer } from 'vite-plugin-fake-server'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export default defineConfig(async () => {
+async function rendererConfig() {
+  // 渲染进程vite配置
   /* 1. 当前窗口名称（默认为 main） */
   const currentWindow = process.env.WINDOW_NAME || "main";
 
@@ -67,8 +69,8 @@ export default defineConfig(async () => {
         scss: {
           // 引入element-plus自定义覆盖样式以及暗色模式样式
           additionalData: `@use "~/styles/element/index.scss" as *; 
-          @use "element-plus/theme-chalk/dark/css-vars.css" as *; 
-          @use "~/styles/element/dark-vars.css" as *;`,
+              @use "element-plus/theme-chalk/dark/css-vars.css" as *; 
+              @use "~/styles/element/dark-vars.css" as *;`,
         },
       },
     },
@@ -93,4 +95,40 @@ export default defineConfig(async () => {
       __WINDOW_NAME__: JSON.stringify(currentWindow),
     },
   };
+}
+
+async function mockConfig() {
+  // mock 数据vite配置
+  console.log('Mock config - current dir:', __dirname);
+  
+  return {
+    root: __dirname, // 使用项目根目录作为mock服务器的根目录
+    plugins: [
+      vitePluginFakeServer({
+        include: ['mock'], // 使用相对路径
+        infixName: false,
+        enableProd: false,
+        logger: true, // 启用日志
+      }),
+    ],
+    server: {
+      port: 3000, // mock服务器端口
+      strictPort: true,
+      host: "localhost",
+      cors: true,
+    },
+  }
+}
+
+export default defineConfig(async ({mode}) => {
+  if(mode === "renderer") {
+    // 渲染进程
+    return rendererConfig();
+  } else if (mode === "mock") {
+    // mock 数据
+    return mockConfig();
+  } else {
+    // 默认渲染进程
+    return rendererConfig();
+  }
 });

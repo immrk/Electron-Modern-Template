@@ -31,11 +31,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, h } from "vue";
-import { HomeFilled, InfoFilled, CopyDocument } from "@element-plus/icons-vue";
+import { ref, h, computed, watch } from "vue";
+import { useRouter, useRoute } from 'vue-router';
+import { HomeFilled, InfoFilled, CopyDocument, Connection } from "@element-plus/icons-vue";
 import { MenuEnum } from "../constants";
 
-const emit = defineEmits(["menuClick"]);
+const router = useRouter();
+const route = useRoute();
 
 const isDark = ref(false);
 
@@ -46,29 +48,42 @@ const menuList = ref([
   {
     name: MenuEnum.HOME,
     icon: () => h(HomeFilled),
+    path: '/home',
     isActive: true,
   },
   {
     name: MenuEnum.SYSTEM,
     icon: () => h(InfoFilled),
+    path: '/system',
     isActive: false,
   },
   {
     name: MenuEnum.WINDOW,
     icon: () => h(CopyDocument),
+    path: '/window',
+    isActive: false,
+  },
+  {
+    name: MenuEnum.API_TEST,
+    icon: () => h(Connection),
+    path: '/api-test',
     isActive: false,
   },
 ]);
 
-const handleMenuClick = (item: any) => {
+// 监听路由变化，更新菜单激活状态
+watch(() => route.path, (newPath) => {
   menuList.value.forEach((menu: any) => {
-    menu.isActive = menu.name === item.name ? true : false;
+    menu.isActive = menu.path === newPath;
   });
-  emit("menuClick", item.name);
+}, { immediate: true });
+
+const handleMenuClick = (item: any) => {
+  router.push(item.path);
 };
 
 const handleSettingClick = () => {
-  window.windowManager.createWindow("setting");
+  (window as any).windowManager.createWindow("setting");
 };
 </script>
 

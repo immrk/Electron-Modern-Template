@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // scripts/dev-multi.js
+import 'dotenv/config';
 import { spawn, exec as _exec } from 'child_process';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { dirname, resolve } from 'path';
@@ -52,7 +53,7 @@ function startVite(name, { devPort }) {
   log(`Starting window "${name}" on port ${devPort}`);
   const child = spawn(
     'npx',
-    ['vite'],
+    ['vite', '--mode', 'renderer'],
     {
       env: { ...process.env, WINDOW_NAME: name, PORT: devPort },
       stdio: 'inherit',
@@ -61,6 +62,21 @@ function startVite(name, { devPort }) {
   );
   child.on('exit', (code) => warn(`Window "${name}" exited, code=${code}`));
   child.on('error', (err) => error(`Window "${name}" startup failed:`, err));
+  return child;
+}
+
+function startMock() {
+  log('Starting mock server...');
+  const child = spawn(
+    'npx',
+    ['vite', '--mode', 'mock'],
+    {
+      stdio: 'inherit',
+      shell: true,
+    },
+  );
+  child.on('exit', (code) => warn(`Mock server exited, code=${code}`));
+  child.on('error', (err) => error(`Mock server startup failed:`, err));
   return child;
 }
 
@@ -85,6 +101,10 @@ function cleanup() {
   for (const [name, cfg] of Object.entries(WINDOW_LIST)) {
     if (pick && !pick.includes(name)) continue;
     children.add(startVite(name, cfg));
+  }
+  // 根据环境变量启动mock服务器
+  if (process.env.VITE_MOCK === 'true') {
+    children.add(startMock());
   }
 
   log('All windows started:');

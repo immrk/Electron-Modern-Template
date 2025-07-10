@@ -16,10 +16,12 @@ export interface RequestConfig extends AxiosRequestConfig {
   retryDelay?: number
 }
 
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 // 创建axios实例
 const createAxiosInstance = (): AxiosInstance => {
   const instance = axios.create({
-    baseURL: process.env.VITE_API_BASE_URL || 'http://localhost:3000',
+    baseURL, // 使用相对路径，让请求发送到当前开发服务器
     timeout: 10000,
     headers: {
       'Content-Type': 'application/json',

@@ -1,5 +1,16 @@
 /// <reference types="vite/client" />
 
+// 为 import.meta.env 添加类型定义
+interface ImportMetaEnv {
+  readonly VITE_API_BASE_URL: string
+  readonly VITE_MOCK: string
+  // 可以在这里添加更多环境变量
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
+
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'
   const component: DefineComponent<{}, {}, any>
