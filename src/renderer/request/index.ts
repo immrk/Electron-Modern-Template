@@ -17,6 +17,7 @@ export interface RequestConfig extends AxiosRequestConfig {
 }
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
+console.log("baseURL", baseURL);
 
 // 创建axios实例
 const createAxiosInstance = (): AxiosInstance => {

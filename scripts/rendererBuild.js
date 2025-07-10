@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // scripts/rendererBuild.js
+import 'dotenv/config';
 import { spawn, exec as _exec } from 'child_process';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { dirname, resolve } from 'path';
