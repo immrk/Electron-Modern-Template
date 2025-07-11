@@ -1,4 +1,5 @@
 <template>
+  <title-bar />
   <div class="main-layout">
     <div class="left-bar">
       <left-bar />
@@ -10,6 +11,7 @@
 </template>
 
 <script setup lang="ts">
+import titleBar from "./components/titlebar.vue";
 import leftBar from './components/leftBar.vue';
 import { useTheme } from '../../composables/useThemeVue';
 import { useLanguage } from '../../composables/useLanguageVue';

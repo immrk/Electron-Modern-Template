@@ -94,7 +94,7 @@ const handleSettingClick = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 10px;
+  padding-top: calc(10px + 30px); /* 30px是titlebar的高度 */
   background-color: var(--el-color-info-light-9);
 }
 
@@ -117,7 +117,7 @@ const handleSettingClick = () => {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  height: 80px;
+  height: 130px;
 }
 
 .menu-item:hover {

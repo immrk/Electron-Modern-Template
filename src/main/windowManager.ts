@@ -47,6 +47,9 @@ export class WindowManager {
     console.log('Preload 脚本路径:', preloadPath)
     console.log("运行环境:", process.env.NODE_ENV)
     console.log('是否为开发环境:', isDev)
+
+    // 若隐藏系统标题栏，windows系统需要手动将窗口控件重新加入（mac不用）
+    const titleBarOverlay = process.platform !== 'darwin' ? { titleBarOverlay: true } : {}
     
     const windowOptions = {
       ...config,
@@ -59,6 +62,7 @@ export class WindowManager {
         sandbox: false,
         webSecurity: true,
         allowRunningInsecureContent: false,
+        ...titleBarOverlay,
         ...options?.webPreferences
       }
     }

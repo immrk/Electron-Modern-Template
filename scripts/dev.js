@@ -48,7 +48,7 @@ async function loadWindowConfig() {
   return WINDOW_LIST;
 }
 
-/** 启动单个 Vite 实例 */
+/** 启动单个窗口Vite 实例 */
 function startVite(name, { devPort }) {
   log(`Starting window "${name}" on port ${devPort}`);
   const child = spawn(
@@ -65,6 +65,7 @@ function startVite(name, { devPort }) {
   return child;
 }
 
+/** 启动mock服务器 */
 function startMock() {
   log('Starting mock server...');
   const child = spawn(

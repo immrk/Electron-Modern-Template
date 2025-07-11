@@ -1,4 +1,5 @@
 <template>
+  <title-bar />
   <div class="setting-app">
     <el-tabs
       v-model="activeName"
@@ -15,9 +16,9 @@
             :closable="false"
           />
           <el-radio-group v-model="themeColor" @change="handleThemeChange">
-            <el-radio value="light">{{ $t('setting.theme.light') }}</el-radio>
-            <el-radio value="dark">{{ $t('setting.theme.dark') }}</el-radio>
-            <el-radio value="system">{{ $t('setting.theme.system') }}</el-radio>
+            <el-radio value="light">{{ $t("setting.theme.light") }}</el-radio>
+            <el-radio value="dark">{{ $t("setting.theme.dark") }}</el-radio>
+            <el-radio value="system">{{ $t("setting.theme.system") }}</el-radio>
           </el-radio-group>
         </div>
       </el-tab-pane>
@@ -28,7 +29,11 @@
             type="primary"
             :closable="false"
           />
-          <el-select v-model="currentLanguage" :placeholder="$t('setting.language.placeholder')" @change="handleLanguageChange">
+          <el-select
+            v-model="currentLanguage"
+            :placeholder="$t('setting.language.placeholder')"
+            @change="handleLanguageChange"
+          >
             <el-option :label="$t('setting.language.system')" value="system" />
             <el-option :label="$t('setting.language.chinese')" value="zh-CN" />
             <el-option :label="$t('setting.language.english')" value="en-US" />
@@ -42,6 +47,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import titleBar from "./components/titlebar.vue";
 import { useTheme } from "../../composables/useThemeVue";
 import { useLanguage } from "../../composables/useLanguageVue";
 
@@ -69,6 +75,7 @@ const handleLanguageChange = (value: string) => {
 <style scoped>
 .setting-app {
   height: 100%;
+  padding-top: 30px;
 }
 
 .content {
