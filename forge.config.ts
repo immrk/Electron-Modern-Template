@@ -39,7 +39,11 @@ export default {
       config: {},
     },
     {
-      name: '@electron-forge/maker-zip',
+      name: '@electron-forge/maker-dmg',
+      config: {
+        name: 'Electron Modern',
+        icon: './src/static/logo/logo.png',
+      },
       platforms: ['darwin'],
     },
     {
@@ -49,6 +53,7 @@ export default {
           icon: './src/static/logo/logo.png',
         },
       },
+      platforms: ['linux'],
     },
     {
       name: '@electron-forge/maker-rpm',
