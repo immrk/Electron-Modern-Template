@@ -49,11 +49,17 @@ export class WindowManager {
     console.log('是否为开发环境:', isDev)
 
     // 若隐藏系统标题栏，windows系统需要手动将窗口控件重新加入（mac不用）
-    const titleBarOverlay = process.platform !== 'darwin' ? { titleBarOverlay: true } : {}
+    const titleBarOverlay = process.platform !== 'darwin' ? {
+      color: 'rgba(255, 255, 255, 0)',
+      symbolColor: '#6a7ade',
+      height: 30,
+    } : false
+    console.log('titleBarOverlay:', titleBarOverlay)
     
     const windowOptions = {
       ...config,
       ...options,
+      titleBarOverlay: titleBarOverlay,
       webPreferences: {
         preload: preloadPath,
         nodeIntegration: false,
@@ -62,7 +68,6 @@ export class WindowManager {
         sandbox: false,
         webSecurity: true,
         allowRunningInsecureContent: false,
-        ...titleBarOverlay,
         ...options?.webPreferences
       }
     }
