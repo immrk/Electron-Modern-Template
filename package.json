@@ -6,6 +6,9 @@
   "main": "./dist/main/main.js",
   "type": "module",
   "license": "ISC",
+  "config": {
+    "forge": "./forge.config.ts"
+  },
   "scripts": {
     "watch": "nodemon",
     "dev": "node scripts/dev.js",
@@ -15,6 +18,7 @@
     "start": "electron ./dist/main/main.js",
     "forge:start": "electron-forge start",
     "package": "electron-forge package",
+    "tsup": "tsup",
     "build:main": "node scripts/main.js",
     "make": "rimraf dist && rimraf out && node scripts/main.js && npm run build:renderer && electron-forge make"
   },
@@ -41,9 +45,7 @@
     "unplugin-vue-components": "^28.8.0",
     "vite": "^6.3.5",
     "vite-plugin-fake-server": "^2.2.0",
-    "vue": "^3.5.17"
-  },
-  "dependencies": {
+    "vue": "^3.5.17",
     "@element-plus/icons-vue": "^2.3.1",
     "@iconify-json/ep": "^1.2.2",
     "@vueuse/core": "^13.5.0",
@@ -53,8 +55,11 @@
     "element-plus": "^2.10.3",
     "i18next": "^25.3.1",
     "i18next-fs-backend": "^2.6.0",
+    "tsup": "^8.5.0",
     "unplugin-icons": "^22.1.0",
     "vue-i18n": "^11.1.9",
     "vue-router": "^4.5.1"
+  },
+  "dependencies": {
   }
 }

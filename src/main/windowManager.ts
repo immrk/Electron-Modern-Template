@@ -40,9 +40,11 @@ export class WindowManager {
     // 合并配置和选项
     // 在开发环境中，preload 脚本路径需要指向编译后的文件
     const isDev = process.env.NODE_ENV === 'development'
-    const preloadPath = isDev 
-      ? path.join(__dirname, './preload/index.js')
-      : path.join(__dirname, './preload/index.js')
+    
+    // 修复 preload 脚本路径
+    let preloadPath: string
+    // 注意：打包后 __dirname 指向 dist 目录，所以需要加上 main 子目录
+    preloadPath = path.join(__dirname, './main/preload/index.js')
     
     console.log('Preload 脚本路径:', preloadPath)
     console.log("运行环境:", process.env.NODE_ENV)
@@ -146,7 +148,7 @@ export class WindowManager {
       })
     } else {
       // 生产环境：加载对应的HTML文件
-      const htmlPath = path.join(__dirname, `../renderer/window/${windowName}/index.html`)
+      const htmlPath = path.join(__dirname, `./renderer/window/${windowName}/index.html`)
       window.loadFile(htmlPath)
     }
   }

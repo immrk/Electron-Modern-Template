@@ -13,13 +13,13 @@ console.log('🚀 Starting build process...');
 
 try {
   // 1. 执行 tsc 命令
-  console.log('📝 Executing TypeScript compilation...');
-  execSync('tsc', { 
+  console.log('📝 Executing Tsup...');
+  execSync('npm run tsup', { 
     cwd: projectRoot, 
     stdio: 'inherit',
     encoding: 'utf8'
   });
-  console.log('✅ TypeScript compilation completed');
+  console.log('✅ Tsup completed');
 
   // 2. 复制 i18n 文件
   console.log('🌐 Copying i18n files...');

@@ -64,8 +64,9 @@ export const initMainI18n = async (): Promise<void> => {
     ns: ['menu'],
     defaultNS: 'menu',
     backend: {
-      loadPath: path.join(__dirname, './locales/{{lng}}.json'),
-      addPath: path.join(__dirname, './locales/{{lng}}.json'),
+      // 注意：打包后 __dirname 指向 dist 目录，所以需要加上 main 子目录
+      loadPath: path.join(__dirname, './main/i18n/locales/{{lng}}.json'),
+      addPath: path.join(__dirname, './main/i18n/locales/{{lng}}.json'),
     },
     interpolation: { escapeValue: false },
     debug: process.env.NODE_ENV === 'development',

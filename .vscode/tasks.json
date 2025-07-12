@@ -4,7 +4,7 @@
     {
       "label": "build-main",
       "type": "shell",
-      "command": "node scripts/main.js",
+      "command": "npm run build:main",
       "problemMatcher": []
     },
     {
