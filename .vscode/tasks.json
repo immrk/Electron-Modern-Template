@@ -16,7 +16,7 @@
     {
       "label": "build-all",
       "type": "shell",
-      "command": "node scripts/main.js && npm run build:renderer",
+      "dependsOn": ["build-main", "build-renderer"],
       "problemMatcher": []
     }
   ]
