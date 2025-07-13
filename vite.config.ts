@@ -55,7 +55,7 @@ async function rendererConfig() {
         resolvers: [
           ElementPlusResolver({ importStyle: "sass" }),
           IconsResolver({
-            enabledCollections: ["ep"],
+            enabledCollections: ["ep", "mdi"],
           }),
         ],
         dts: "types/components.d.ts",

@@ -1,6 +1,18 @@
 <template>
   <div class="left-bar">
-    <el-avatar shape="square" :size="50" :src="squareUrl" />
+    <el-popover
+      placement="right-start"
+      :width="200"
+      trigger="hover"
+      :hide-after="100"
+      :show-arrow="false"
+      :offset="10"
+    >
+      <template #reference>
+        <el-avatar class="avatar" shape="square" :size="50" :src="squareUrl" />
+      </template>
+      <UserPopover :isLogin="isLogin" />
+    </el-popover>
     <div class="menu-list">
       <el-icon
         class="menu-item"
@@ -35,11 +47,13 @@ import { ref, h, computed, watch } from "vue";
 import { useRouter, useRoute } from 'vue-router';
 import { HomeFilled, InfoFilled, CopyDocument, Connection } from "@element-plus/icons-vue";
 import { MenuEnum } from "../constants";
+import { useLogin } from "../../../composables/useLogin";
+import UserPopover from "./userPopover.vue";
 
 const router = useRouter();
 const route = useRoute();
 
-const isDark = ref(false);
+const { isLogin } = useLogin();
 
 const squareUrl =
   "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png";
@@ -96,6 +110,10 @@ const handleSettingClick = () => {
   align-items: center;
   padding-top: calc(10px + 30px); /* 30px是titlebar的高度 */
   background-color: var(--el-color-info-light-9);
+}
+
+.avatar {
+  cursor: pointer;
 }
 
 .menu-list {

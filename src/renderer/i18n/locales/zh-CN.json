@@ -1,6 +1,11 @@
 {
   "hello": "你好，世界",
   "main": {
+    "login": {
+      "logined": "已登录",
+      "unlogin": "未登录",
+      "toLogin": "前往登录"
+    },
     "home": {
       "title": "Electron-Modern-Template",
       "description": "现代化Electron开发框架，让桌面应用开发更简单高效",
@@ -129,6 +134,13 @@
       "chinese": "中文",
       "english": "英文"
     }
+  },
+  "login": {
+    "title": "登录",
+    "email": "邮箱",
+    "password": "密码",
+    "login": "登录",
+    "register": "注册"
   },
   "common": {
     "yes": "是",

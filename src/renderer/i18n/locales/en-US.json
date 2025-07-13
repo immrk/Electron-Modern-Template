@@ -1,6 +1,11 @@
 {
   "hello": "Hello World",
   "main": {
+    "login": {
+      "logined": "Logged in",
+      "unlogin": "Not logged in",
+      "toLogin": "Go to login"
+    },
     "home": {
       "title": "Electron-Modern-Template",
       "description": "Modern Electron development framework, making desktop application development simpler and more efficient",
@@ -133,5 +138,12 @@
   "common": {
     "yes": "Yes",
     "no": "No"
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "register": "Register"
   }
 }
