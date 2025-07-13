@@ -25,11 +25,11 @@
         />
       </svg>
     </div>
-    <el-form :model="form" label-width="80px" label-position="top" style="width: 60%;">
-      <el-form-item :label="$t('login.email')">
+    <el-form ref="formRef" :model="form" :rules="rules" label-width="80px" label-position="top" style="width: 60%;">
+      <el-form-item :label="$t('login.email')" prop="email">
         <el-input v-model="form.email" />
       </el-form-item>
-      <el-form-item :label="$t('login.password')">
+      <el-form-item :label="$t('login.password')" prop="password">
         <el-input v-model="form.password" type="password" />
       </el-form-item>
     </el-form>  
@@ -44,18 +44,33 @@
 import { ref } from 'vue';
 import { login } from '../../../service';
 
+const rules = ref({
+  email: [
+    { required: true, message: '请输入邮箱', trigger: 'blur' },
+    { type: 'email', message: '请输入正确的邮箱', trigger: 'blur' },
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+  ],
+})
+
 const form = ref({
   email: '',
   password: '',
 });
 
 const loading = ref(false);
+const formRef = ref<FormInstance>();
 
 const handleLogin = async () => {
+  await formRef.value?.validate();
   loading.value = true;
   login(form.value).then(async (res) => {
     await window.auth.login(res);
     ElMessage.success('登录成功');
+    setTimeout(() => {
+      window.windowManager.closeWindow('login')
+    }, 500)
   }).catch((error) => {
     ElMessage.error(error.message);
   }).finally(() => {

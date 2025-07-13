@@ -11,7 +11,7 @@
       <template #reference>
         <el-avatar class="avatar" shape="square" :size="50" :src="props.userdata.avatar || squareUrl" />
       </template>
-      <UserPopover :isLogin="isLogin" />
+      <UserPopover :isLogin="isLogin" :userdata="props.userdata" />
     </el-popover>
     <div class="menu-list">
       <el-icon
@@ -47,7 +47,7 @@ import { ref, h, computed, watch } from "vue";
 import { useRouter, useRoute } from 'vue-router';
 import { HomeFilled, InfoFilled, CopyDocument, Connection } from "@element-plus/icons-vue";
 import { MenuEnum } from "../constants";
-import { useLogin } from "../../../composables/useLogin";
+// import { useLogin } from "../../../composables/useLogin";
 import UserPopover from "./userPopover.vue";
 
 const props = defineProps<{
@@ -57,7 +57,9 @@ const props = defineProps<{
 const router = useRouter();
 const route = useRoute();
 
-const { isLogin } = useLogin();
+const isLogin = computed(() => {
+  return props.userdata && props.userdata.accessToken ? true : false
+})
 
 const squareUrl =
   "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png";

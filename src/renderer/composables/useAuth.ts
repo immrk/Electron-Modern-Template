@@ -5,7 +5,9 @@ export function useAuth() {
 
   const getToken = async () => {
     const data = await window.auth.getToken()
-    return data
+    userdata.value = data.data
+    localStorage.setItem('userdata', JSON.stringify(userdata.value))
+    return userdata.value
   }
 
   const login = async (data: any) => {
@@ -25,17 +27,12 @@ export function useAuth() {
   }
 
   // 挂载token更新事件
-  onMounted(() => {
+  onMounted(async () => {
     // 初始化userdata
-    getToken().then((data) => {
-      userdata.value = data.data
-      localStorage.setItem('userdata', JSON.stringify(userdata.value))
-    })
+    getToken()
     // 监听token更新事件
-    window.auth.onTokenChange((data: any) => {
-      console.log('userdata更新', data.data)
-      userdata.value = data.data
-      localStorage.setItem('userdata', JSON.stringify(userdata.value))
+    window.auth.onTokenChange(async () => {
+      await getToken()
     })
   })
 

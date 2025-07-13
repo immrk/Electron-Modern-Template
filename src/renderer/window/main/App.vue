@@ -2,7 +2,7 @@
   <title-bar />
   <div class="main-layout">
     <div class="left-bar">
-      <left-bar :userdata="userdata" :isLogin="isLogin"/>
+      <left-bar :userdata="userdata && userdata!=='undefined' ? userdata : {}" />
     </div>
     <div class="main-content">
       <router-view />
@@ -26,7 +26,7 @@ const { currentLanguage } = useLanguage();
 console.log("main currentLanguage:", currentLanguage.value);
 
 // 使用统一的用户管理
-const { userdata, isLogin } = useAuth();
+const { userdata } = useAuth();
 console.log("main userdata:", userdata);
 </script>
 

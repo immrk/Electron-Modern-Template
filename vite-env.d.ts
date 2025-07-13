@@ -68,6 +68,7 @@ interface ApiRequestAPI {
 // Auth API 类型定义
 interface AuthAPI {
   login: (data: any) => Promise<any>
+  logout: () => Promise<any>
   getToken: () => Promise<any>
   tokenRefresh: (data: any) => Promise<any>
   onTokenChange: (callback: (token: string) => void) => void
