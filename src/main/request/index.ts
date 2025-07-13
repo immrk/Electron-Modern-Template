@@ -1,31 +1,53 @@
-// electron net 请求
 import { net } from "electron";
 
 const baseURL = process.env.VITE_API_BASE_URL;
 
+console.log("baseURL", baseURL);
+
 export const netRequest = (option: any) => {
-  return new Promise(async (resolve, reject) => {
+  const paramsString = Object.entries(option.params || {})
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+  const url = `${baseURL}${option.url}${paramsString ? `?${paramsString}` : ""}`;
+
+  return new Promise((resolve, reject) => {
     const request = net.request({
       ...option,
-      url: `${baseURL}${option.url}`,
+      url,
     });
-    let Data = {};
+
+    let rawData = "";
+
     request.on("response", (response) => {
       response.on("data", (chunk) => {
-        Data = chunk;
+        rawData += chunk;
       });
+
       response.on("end", () => {
-        if (response.statusCode !== 200) {
-          reject({
-            response: {
+        try {
+          const parsedData = JSON.parse(rawData);
+          if (response.statusCode !== 200) {
+            reject({
               status: response.statusCode,
-              data: Data,
-            },
+              data: parsedData,
+            });
+          } else {
+            resolve(parsedData);
+          }
+        } catch (e) {
+          reject({
+            status: response.statusCode,
+            data: rawData,
+            error: e,
           });
         }
-        resolve(Data);
       });
     });
+
+    request.on("error", (err) => {
+      reject(err);
+    });
+
     request.end();
   });
 };

@@ -1,5 +1,7 @@
 import { http } from '../request'
 
-export const getCommon = () => {
-  return http.get('/api/common/get')
+export const getCommon = (params: any) => {
+  return http.get('/api/common/get', {
+    params,
+  })
 }

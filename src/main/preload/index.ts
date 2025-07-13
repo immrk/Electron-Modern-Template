@@ -2,6 +2,7 @@ import { exposeWindowManagerAPI } from './apis/windowManager.js'
 import { exposeVersionsAPI } from './apis/versions.js'
 import { exposeStoreAPI } from './apis/store.js'
 import { exposeSystemAPI } from './apis/system.js'
+import { exposeApiRequestAPI } from './apis/apiRequest.js'
 
 console.log('Preload 脚本开始执行')
 
@@ -17,6 +18,9 @@ try {
 
   // System API
   exposeSystemAPI()
+
+  // API请求 API
+  exposeApiRequestAPI()
   
   console.log('Preload 脚本执行完成')
 } catch (error) {

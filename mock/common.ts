@@ -1,6 +1,9 @@
 export default [
   {
     url: '/api/common/get',
+    args: {
+      from: 'renderer',
+    },
     method: 'get',
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -12,9 +15,7 @@ export default [
         code: 200,
         message: 'success',
         data: {
-          name: 'John Doe',
-          age: 25,
-          email: 'john.doe@example.com'
+          name: 'Success response from mock server',
         }
       }
     }

@@ -102,6 +102,15 @@
         "closeWindowFailed": "关闭窗口 {name} 失败",
         "windowStateChanged": "窗口状态变化: {windowName} - {action}"
       }
+    },
+    "apiTest": {
+      "title": "API 测试",
+      "description": "该测试页面使用封装好的请求方法，请求mock服务，用于展示该框架的API使用方法",
+      "testGetRenderer": "发送GET请求（渲染进程）",
+      "testGetMain": "发送GET请求（主进程）",
+      "testResult": "响应结果",
+      "testFailed": "请求失败",
+      "loading": "请求中..."
     }
   },
   "setting": {

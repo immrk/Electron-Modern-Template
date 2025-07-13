@@ -60,6 +60,11 @@ interface StoreAPI {
   setStore: (key: string, value: any) => Promise<void>
 }
 
+// API请求 API 类型定义
+interface ApiRequestAPI {
+  getCommon: () => Promise<any>
+}
+
 // 扩展 Window 接口
 declare global {
   interface Window {
@@ -67,6 +72,7 @@ declare global {
     windowManager: WindowManagerAPI
     versions: VersionsAPI
     store: StoreAPI
+    apiRequest: ApiRequestAPI
   }
 }
 

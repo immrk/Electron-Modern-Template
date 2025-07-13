@@ -4,7 +4,6 @@ import { windowManager } from './windowManager.js'
 import { WINDOW_NAMES } from '../config/windowConfig.js'
 import { setupIpcHandlers } from './ipc/index.js'
 import { initMainI18n } from './i18n/index.js'
-import Store from 'electron-store';
 import '../utils/logger.js'
 
 app.whenReady().then(async () => {

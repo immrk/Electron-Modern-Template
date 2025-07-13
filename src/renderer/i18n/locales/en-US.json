@@ -102,6 +102,15 @@
         "closeWindowFailed": "Failed to close window {name}",
         "windowStateChanged": "Window state changed: {windowName} - {action}"
       }
+    },
+    "apiTest": {
+      "title": "API Test",
+      "description": "This test page uses the encapsulated request method to request the mock service, demonstrating the API usage method of this framework",
+      "testGetRenderer": "Send GET Request (Renderer)",
+      "testGetMain": "Send GET Request (Main)",
+      "testResult": "Response Result",
+      "testFailed": "Request Failed",
+      "loading": "Requesting..."
     }
   },
   "setting": {

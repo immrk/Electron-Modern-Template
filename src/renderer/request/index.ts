@@ -42,14 +42,6 @@ const setupRequestInterceptors = (instance: AxiosInstance) => {
         config.headers.Authorization = `Bearer ${token}`
       }
 
-      // 添加时间戳防止缓存
-      if (config.method === 'get') {
-        config.params = {
-          ...config.params,
-          _t: Date.now(),
-        }
-      }
-
       console.log('🚀 发送请求:', config.method?.toUpperCase(), config.url)
       return config
     },

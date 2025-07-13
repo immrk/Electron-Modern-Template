@@ -1,4 +1,7 @@
 import { defineConfig } from 'tsup'
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default defineConfig({
   entry: [
@@ -16,4 +19,9 @@ export default defineConfig({
   external: [
     'electron',
   ],
+  // 定义环境变量
+  define: {
+    'process.env.VITE_API_BASE_URL': JSON.stringify(process.env.VITE_API_BASE_URL),
+    'process.env.VITE_MOCK': JSON.stringify(process.env.VITE_MOCK),
+  },
 })
