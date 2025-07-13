@@ -9,7 +9,7 @@
       :offset="10"
     >
       <template #reference>
-        <el-avatar class="avatar" shape="square" :size="50" :src="squareUrl" />
+        <el-avatar class="avatar" shape="square" :size="50" :src="props.userdata.avatar || squareUrl" />
       </template>
       <UserPopover :isLogin="isLogin" />
     </el-popover>
@@ -49,6 +49,10 @@ import { HomeFilled, InfoFilled, CopyDocument, Connection } from "@element-plus/
 import { MenuEnum } from "../constants";
 import { useLogin } from "../../../composables/useLogin";
 import UserPopover from "./userPopover.vue";
+
+const props = defineProps<{
+  userdata: any
+}>();
 
 const router = useRouter();
 const route = useRoute();

@@ -42,11 +42,9 @@ const setupRequestInterceptors = (instance: AxiosInstance) => {
         config.headers.Authorization = `Bearer ${token}`
       }
 
-      console.log('🚀 发送请求:', config.method?.toUpperCase(), config.url)
       return config
     },
     (error) => {
-      console.error('❌ 请求错误:', error)
       return Promise.reject(error)
     }
   )
@@ -56,8 +54,6 @@ const setupRequestInterceptors = (instance: AxiosInstance) => {
 const setupResponseInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.response.use(
     (response: AxiosResponse<ApiResponse>) => {
-      console.log('✅ 响应成功:', response.config.url, response.data)
-      
       // 处理业务状态码
       const { code, message, data, success } = response.data
       
@@ -71,8 +67,6 @@ const setupResponseInterceptors = (instance: AxiosInstance) => {
       }
     },
     (error: AxiosError) => {
-      console.error('❌ 响应错误:', error.config?.url, error.message)
-      
       let errorMessage = '网络请求失败'
       
       if (error.response) {
@@ -126,8 +120,6 @@ const retryRequest = async (
     const retryDelay = config.retryDelay || 1000
     
     if (retryCount < maxRetries) {
-      console.log(`🔄 重试请求 (${retryCount + 1}/${maxRetries}):`, config.url)
-      
       await new Promise(resolve => setTimeout(resolve, retryDelay))
       return retryRequest(instance, config, retryCount + 1)
     }
@@ -174,26 +166,10 @@ export class HttpClient {
   // 通用请求方法
   async request<T = any>(config: RequestConfig): Promise<T> {
     try {
-      // 显示加载状态
-      if (config.showLoading !== false) {
-        // 这里可以集成loading状态管理
-        console.log('⏳ 请求开始:', config.url)
-      }
-
       const response = await retryRequest(this.instance, config)
-      
-      // 隐藏加载状态
-      if (config.showLoading !== false) {
-        console.log('✅ 请求完成:', config.url)
-      }
 
       return response
     } catch (error) {
-      // 隐藏加载状态
-      if (config.showLoading !== false) {
-        console.log('❌ 请求失败:', config.url)
-      }
-
       // 错误处理
       if (config.showError !== false) {
         this.handleError(error)

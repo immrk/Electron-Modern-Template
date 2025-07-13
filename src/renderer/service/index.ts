@@ -5,3 +5,7 @@ export const getCommon = (params: any) => {
     params,
   })
 }
+
+export const login = (data: any) => {
+  return http.post('/api/user/login', data)
+}

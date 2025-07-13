@@ -65,6 +65,15 @@ interface ApiRequestAPI {
   getCommon: () => Promise<any>
 }
 
+// Auth API 类型定义
+interface AuthAPI {
+  login: (data: any) => Promise<any>
+  getToken: () => Promise<any>
+  tokenRefresh: (data: any) => Promise<any>
+  onTokenChange: (callback: (token: string) => void) => void
+  onLogout: (callback: () => void) => void
+}
+
 // 扩展 Window 接口
 declare global {
   interface Window {
@@ -73,6 +82,7 @@ declare global {
     versions: VersionsAPI
     store: StoreAPI
     apiRequest: ApiRequestAPI
+    auth: AuthAPI
   }
 }
 

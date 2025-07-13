@@ -7,3 +7,11 @@ export const getCommon = (params: any) => {
     params,
   })
 }
+
+export const tokenRefresh = (data: any) => {
+  return netRequest({
+    url: '/api/user/refresh',
+    method: 'POST',
+    data,
+  })
+}

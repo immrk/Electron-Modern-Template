@@ -4,6 +4,7 @@ import { setupSystemHandlers } from './handlers/system.js'
 import { setupI18nHandlers } from './handlers/i18n.js'
 import { setupStoreHandlers } from './handlers/store.js'
 import { setupApiRequestHandlers } from './handlers/apiRequest.js'
+import { setupAuthHandlers } from './handlers/auth.js'
 
 /**
  * 设置所有IPC处理器
@@ -29,6 +30,9 @@ export const setupIpcHandlers = (): void => {
 
   // 设置API请求相关的IPC处理器
   setupApiRequestHandlers()
+
+  // 设置auth相关的IPC处理器
+  setupAuthHandlers()
   
   console.log('IPC处理器设置完成')
 }
