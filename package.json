@@ -47,6 +47,7 @@
     "electron-squirrel-startup": "^1.0.1",
     "electron-store": "^10.1.0",
     "element-plus": "^2.10.3",
+    "esbuild": "^0.28.1",
     "i18next": "^25.3.1",
     "i18next-fs-backend": "^2.6.0",
     "nodemon": "^3.1.10",
